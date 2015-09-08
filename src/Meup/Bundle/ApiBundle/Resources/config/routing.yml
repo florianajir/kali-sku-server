@@ -1,3 +1,27 @@
-meup_api_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: MeupApiBundle:Default:index }
+# get sku details
+meup_api_get_sku:
+    pattern: /{sku}
+    defaults: { _controller: MeupApiBundle:Sku:getSku, _format: json }
+    requirements:
+        _method: GET
+
+# get the sku form
+meup_api_new_sku:
+    pattern: /
+    defaults: { _controller: MeupApiBundle:Sku:newSku, _format: json }
+    requirements:
+        _method: GET
+
+# create a new sku
+meup_api_post_sku:
+    pattern: /
+    defaults: { _controller: MeupApiBundle:Sku:postSku, _format: json }
+    requirements:
+        _method: POST
+
+# delete sku
+meup_api_delete_sku:
+    pattern: /{sku}
+    defaults: { _controller: MeupApiBundle:Sku:deleteSku, _format: json }
+    requirements:
+        _method: DELETE
