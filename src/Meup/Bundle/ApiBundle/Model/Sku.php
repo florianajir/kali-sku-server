@@ -35,7 +35,7 @@ class Sku {
      * @param string $code
      * @return Sku
      */
-    public function setSku($code)
+    public function setCode($code)
     {
         $this->code = $code;
         return $this;
