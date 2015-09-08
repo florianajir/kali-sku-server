@@ -1,7 +1,10 @@
 parameters:
-#    meup_api.example.class: Meup\Bundle\ApiBundle\Example
+    meup_kali.sku.manager: Meup\Bundle\ApiBundle\Manager\SkuManager
+    meup_kali.sku.entity.class: Meup\Bundle\ApiBundle\Entity\Sku
 
 services:
-#    meup_api.example:
-#        class: %meup_api.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    meup_kali.sku_manager:
+        class: %meup_kali.sku.manager%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %meup_kali.sku.entity.class%

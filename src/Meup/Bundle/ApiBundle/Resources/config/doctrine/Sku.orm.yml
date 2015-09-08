@@ -8,18 +8,17 @@ Meup\Bundle\ApiBundle\Entity\Sku:
             id: true
             generator:
                 strategy: AUTO
-        sku:
+        code:
             type: string
             nullable: false
-            length: 7
         project:
             type: string
             nullable: false
             length: 100
-        foreignerType:
+        foreign_type:
             type: string
             nullable: false
-        foreignerId:
+        foreign_id:
             type: string
             nullable: false
         createdAt:
@@ -28,5 +27,4 @@ Meup\Bundle\ApiBundle\Entity\Sku:
         deletedAt:
             type: datetime
             nullable: true
-            
 

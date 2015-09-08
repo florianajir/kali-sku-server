@@ -4,12 +4,14 @@ namespace Meup\Bundle\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
-use Meup\Bundle\ApiBundle\Model\Identifier;
+use Meup\Bundle\ApiBundle\Model\Sku as SkuModel;
 
 /**
+ * Author: c. Boissieux
+ *
  * Sku
  */
-class Sku implements  Identifier
+class Sku implements  SkuModel
 {
     /**
      * @var integer
