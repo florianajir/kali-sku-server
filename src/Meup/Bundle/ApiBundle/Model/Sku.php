@@ -1,7 +1,5 @@
 <?php
-
 namespace Meup\Bundle\ApiBundle\Model;
-
 
 /**
  * @author  c. Boissieux <christophe@1001pharmacies.com>
@@ -10,15 +8,25 @@ namespace Meup\Bundle\ApiBundle\Model;
 
 class Sku implements SkuInterface
 {
-
+    /**
+     * @var string
+     */
     protected $code;
 
+    /**
+     * @var string
+     */
     protected $project;
 
+    /**
+     * @var string
+     */
     protected $foreignType;
 
+    /**
+     * @var string
+     */
     protected $foreignId;
-
 
     /**
      * {@inheritDoc}
@@ -34,6 +42,7 @@ class Sku implements SkuInterface
     public function setCode($code)
     {
         $this->code = $code;
+
         return $this;
     }
 
@@ -51,6 +60,7 @@ class Sku implements SkuInterface
     public function setProject($project)
     {
         $this->project = $project;
+
         return $this;
     }
 
@@ -63,11 +73,15 @@ class Sku implements SkuInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set foreignType
+     *
+     * @param string $foreignType
+     * @return Sku
      */
     public function setforeignType($foreignType)
     {
         $this->foreignType = $foreignType;
+
         return $this;
     }
 
@@ -85,7 +99,7 @@ class Sku implements SkuInterface
     public function setForeignId($foreignId)
     {
         $this->foreignId = $foreignId;
+
         return $this;
     }
-
 }
