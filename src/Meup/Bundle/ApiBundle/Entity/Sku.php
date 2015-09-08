@@ -28,7 +28,6 @@ class Sku extends SkuModel
      */
     private $deletedAt;
 
-
     /**
      * Constructor
      */
@@ -108,5 +107,4 @@ class Sku extends SkuModel
 
         return $this;
     }
-
 }

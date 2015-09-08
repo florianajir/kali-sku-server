@@ -73,10 +73,7 @@ class Sku implements SkuInterface
     }
 
     /**
-     * Set foreignType
-     *
-     * @param string $foreignType
-     * @return Sku
+     * {@inheritDoc}
      */
     public function setforeignType($foreignType)
     {
