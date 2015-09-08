@@ -1,9 +1,15 @@
 parameters:
-    meup_kali.sku_model.class:   Meup\Bundle\ApiBundle\Model\Sku
-    meup_kali.sku_factory.class: Meup\Bundle\ApiBundle\Factory\SkuFactory
+    meup_kali.sku_model.class:     Meup\Bundle\ApiBundle\Model\Sku
+    meup_kali.sku_factory.class:   Meup\Bundle\ApiBundle\Factory\SkuFactory
+    meup_kali.sku_generator.class: Meup\Bundle\ApiBundle\Service\SkuGenerator
 
 services:
     meup_kali.sku_factory:
         class: %meup_kali.sku_factory.class%
         arguments:
             - %meup_kali.sku_model.class%
+
+    meup_kali.sku_generator:
+        class: %meup_kali.sku_generator.class%
+        arguments:
+            - %default_sku_code_length%

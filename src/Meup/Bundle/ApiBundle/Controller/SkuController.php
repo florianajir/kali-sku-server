@@ -136,7 +136,7 @@ class SkuController extends FOSRestController
 
         $form->submit($request);
         if ($form->isValid()) {
-            $this->getSkuManager()->persist($sku);
+            $this->getSkuManager()->create($sku);
 
             return $this->routeRedirectView('get_sku', array('sku' => $sku->code));
         }
