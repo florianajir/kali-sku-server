@@ -1,0 +1,19 @@
+Meup\Bundle\ApiBundle\Model\Sku:
+  exclusion_policy: ALL
+  exclude: false
+  read_only: false
+  accessor_order: alphabetical
+
+  properties:
+    project:
+      expose: true
+      type: string
+      serialized_name: project
+    foreign_type:
+      expose: true
+      type: string
+      serialized_name: type
+    foreign_id:
+      expose: true
+      type: string
+      serialized_name: id
