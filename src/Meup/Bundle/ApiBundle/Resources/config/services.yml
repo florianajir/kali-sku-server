@@ -1,14 +1,21 @@
 parameters:
-    meup_kali.sku_model.class:     Meup\Bundle\ApiBundle\Model\Sku
+    meup_kali.sku_manager:         Meup\Bundle\ApiBundle\Doctrine\SkuManager
+    meup_kali.sku_entity.class:    Meup\Bundle\ApiBundle\Entity\Sku
     meup_kali.sku_factory.class:   Meup\Bundle\ApiBundle\Factory\SkuFactory
     meup_kali.sku_generator.class: Meup\Bundle\ApiBundle\Service\SkuGenerator
     meup_kali.sku_form_type.class: Meup\Bundle\ApiBundle\Form\Type\SkuType
 
 services:
+    meup_kali.sku_manager:
+        class: %meup_kali.sku_manager%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %meup_kali.sku_entity.class%
+
     meup_kali.sku_factory:
         class: %meup_kali.sku_factory.class%
         arguments:
-            - %meup_kali.sku_model.class%
+            - %meup_kali.sku_entity.class%
 
     meup_kali.sku_generator:
         class: %meup_kali.sku_generator.class%
