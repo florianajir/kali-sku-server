@@ -30,11 +30,11 @@ class SkuType extends AbstractType
         $builder->add('project', 'text', array(
             'description' => 'Name of the application',
         ));
-        $builder->add('entityType', 'text', array(
+        $builder->add('type', 'text', array(
             'description' => 'Type of the entity to be skued',
             'property_path' => 'foreignType'
         ));
-        $builder->add('entityId', 'text', array(
+        $builder->add('id', 'text', array(
             'description' => 'Id of the entity to be skued',
             'property_path' => 'foreignId'
         ));
