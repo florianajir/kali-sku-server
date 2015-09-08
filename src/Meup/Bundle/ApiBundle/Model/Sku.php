@@ -2,7 +2,6 @@
 
 namespace Meup\Bundle\ApiBundle\Model;
 
-use Meup\Bundle\ApiBundle\Entity\Sku;
 
 /**
  * Author: c. Boissieux
@@ -15,9 +14,9 @@ class Sku {
 
     protected $project;
 
-    protected $foreignerType;
+    protected $foreignType;
 
-    protected $foreignerId;
+    protected $foreignId;
 
 
     /**
@@ -69,42 +68,42 @@ class Sku {
      *
      * @return string
      */
-    public function getForeignerType()
+    public function getForeignType()
     {
-        return $this->foreignerType;
+        return $this->foreignType;
     }
 
     /**
-     * Set foreignerType
+     * Set foreignType
      *
-     * @param string $foreignerType
+     * @param string $foreignType
      * @return Sku
      */
-    public function setForeignerType($foreignerType)
+    public function setforeignType($foreignType)
     {
-        $this->foreignerType = $foreignerType;
+        $this->foreignType = $foreignType;
         return $this;
     }
 
     /**
-     * Get foreignerId
+     * Get foreignId
      *
      * @return string
      */
-    public function getForeignerId()
+    public function getForeignId()
     {
-        return $this->foreignerId;
+        return $this->foreignId;
     }
 
     /**
-     * Set foreignerId
+     * Set foreignId
      *
-     * @param string $foreignerId
+     * @param string $foreignId
      * @return Sku
      */
-    public function setForeignerId($foreignerId)
+    public function setForeignId($foreignId)
     {
-        $this->foreignerId = $foreignerId;
+        $this->foreignId = $foreignId;
         return $this;
     }
 
