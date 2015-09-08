@@ -8,7 +8,7 @@ Meup\Bundle\ApiBundle\Entity\Sku:
             id: true
             generator:
                 strategy: AUTO
-        sku:
+        code:
             type: string
             nullable: false
             length: 7
@@ -28,5 +28,4 @@ Meup\Bundle\ApiBundle\Entity\Sku:
         deletedAt:
             type: datetime
             nullable: true
-            
 

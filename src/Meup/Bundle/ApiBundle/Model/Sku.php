@@ -9,9 +9,9 @@ use Meup\Bundle\ApiBundle\Entity\Sku;
  *
  */
 
-class Identifier {
+class Sku {
 
-    protected $sku;
+    protected $code;
 
     protected $project;
 
@@ -21,24 +21,24 @@ class Identifier {
 
 
     /**
-     * Get sku
+     * Get code
      *
      * @return string
      */
-    public function getSku()
+    public function getCode()
     {
-        return $this->sku;
+        return $this->code;
     }
 
     /**
-     * Set sku
+     * Set code
      *
-     * @param string $sku
-     * @return Identifier
+     * @param string $code
+     * @return Sku
      */
-    public function setSku($sku)
+    public function setSku($code)
     {
-        $this->sku = $sku;
+        $this->code = $code;
         return $this;
     }
 
@@ -56,7 +56,7 @@ class Identifier {
      * Set project
      *
      * @param string $project
-     * @return Identifier
+     * @return Sku
      */
     public function setProject($project)
     {
@@ -78,7 +78,7 @@ class Identifier {
      * Set foreignerType
      *
      * @param string $foreignerType
-     * @return Identifier
+     * @return Sku
      */
     public function setForeignerType($foreignerType)
     {
@@ -100,7 +100,7 @@ class Identifier {
      * Set foreignerId
      *
      * @param string $foreignerId
-     * @return Identifier
+     * @return Sku
      */
     public function setForeignerId($foreignerId)
     {
