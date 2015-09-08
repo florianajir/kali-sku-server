@@ -6,6 +6,6 @@ namespace Meup\Bundle\ApiBundle\Manager;
  * Author: c. Boissieux
  *
  */
-class SkuManager
+abstract class SkuManager implements SkuManagerInterface
 {
 }

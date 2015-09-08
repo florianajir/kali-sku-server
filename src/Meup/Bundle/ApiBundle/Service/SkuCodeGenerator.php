@@ -2,11 +2,11 @@
 namespace Meup\Bundle\ApiBundle\Service;
 
 /**
- * Class SkuGenerator
+ * Class SkuCodeGenerator
  *
  * @author florianajir <florian@1001pharmacies.com>
  */
-class SkuGenerator implements SkuCodeGeneratorInterface
+class SkuCodeGenerator implements SkuCodeGeneratorInterface
 {
     /**
      * @var int

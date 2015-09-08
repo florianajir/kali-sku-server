@@ -10,18 +10,16 @@
 
 namespace Meup\Bundle\ApiBundle\Controller;
 
-use FOS\RestBundle\Util\Codes;
-
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\RouteRedirectView;
 use FOS\RestBundle\View\View;
-
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
-use Symfony\Component\HttpFoundation\Request;
+use Meup\Bundle\ApiBundle\Factory\SkuFactory;
+use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;
 use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -32,22 +30,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class SkuController extends FOSRestController
 {
-    /**
-     * @return SkuManagerInterface
-     */
-    private function getSkuManager()
-    {
-        return $this->get('meup_kali.sku_manager');
-    }
-
-    /**
-     * @return SkuFactoryInterface
-     */
-    private function getSkuFactory()
-    {
-        return $this->get('meup_kali.sku_factory');
-    }
-
     /**
      * Get a sku.
      *
@@ -79,7 +61,7 @@ class SkuController extends FOSRestController
      */
     public function getSkuAction(ParamFetcherInterface $paramFetcher)
     {
-        if ('' === $paramFetcher->get('sku')){
+        if ('' === $paramFetcher->get('sku')) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
         $sku = $this->getSkuManager()->getByCode($paramFetcher->get('sku'));
@@ -89,6 +71,14 @@ class SkuController extends FOSRestController
         $view = new View($sku);
 
         return $view;
+    }
+
+    /**
+     * @return SkuManagerInterface
+     */
+    private function getSkuManager()
+    {
+        return $this->get('meup_kali.sku_manager');
     }
 
     /**
@@ -144,6 +134,14 @@ class SkuController extends FOSRestController
         return array(
             'form' => $form
         );
+    }
+
+    /**
+     * @return SkuFactory
+     */
+    private function getSkuFactory()
+    {
+        return $this->get('meup_kali.sku_factory');
     }
 
     /**
