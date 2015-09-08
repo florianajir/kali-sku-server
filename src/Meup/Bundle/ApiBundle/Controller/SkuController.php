@@ -64,7 +64,12 @@ class SkuController extends FOSRestController
      *
      * @Rest\View()
      *
-     * @Rest\QueryParam(name="sku", nullable=false, strict=true, description="Sku code.")
+     * @Rest\QueryParam(
+     *      name="sku",
+     *      nullable=false,
+     *      strict=true,
+     *      description="Sku code."
+     * )
      *
      * @param ParamFetcherInterface $paramFetcher
      *
@@ -155,7 +160,12 @@ class SkuController extends FOSRestController
      *   }
      * )
      *
-     * @Rest\QueryParam(name="sku", nullable=false, strict=true, description="Sku code.")
+     * @Rest\QueryParam(
+     *      name="sku",
+     *      nullable=false,
+     *      strict=true,
+     *      description="Sku code."
+     * )
      *
      * @param ParamFetcherInterface $paramFetcher
      *
