@@ -8,11 +8,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Meup\DemoBundle\Controller;
+namespace Meup\Bundle\ApiBundle\Controller;
 
 use FOS\RestBundle\Util\Codes;
 
-use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\RouteRedirectView;
@@ -22,6 +22,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -40,37 +41,47 @@ class SkuController extends FOSRestController
     }
 
     /**
+     * @return SkuFactoryInterface
+     */
+    private function getSkuFactory()
+    {
+        return $this->get('meup_kali.sku_factory');
+    }
+
+    /**
      * Get a sku.
      *
      * @ApiDoc(
-     *   section = "Demo",
+     *   section = "Sku",
      *   resource = true,
-     *   resourceDescription="Get a single center.",
-     *   output = "Meup\DemoBundle\Model\Center",
+     *   resourceDescription="Get a single sku.",
+     *   output = "Meup\Bundle\ApiBundle\Model\Sku",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when the center is not found"
      *   }
      * )
      *
-     * @Annotations\View(templateVar="center")
+     * @Rest\View()
      *
-     * @param string $sku the sku code
+     * @Rest\QueryParam(name="sku", nullable=false, strict=true, description="Sku code.")
+     *
+     * @param ParamFetcherInterface $paramFetcher
      *
      * @return array
      *
-     * @throws NotFoundHttpException when center not exist
+     * @throws NotFoundHttpException when sku code not exist
      */
-    public function getSkuAction($sku)
+    public function getSkuAction(ParamFetcherInterface $paramFetcher)
     {
-        $sku = $this->getSkuManager()->get($sku);
+        if ('' === $paramFetcher->get('sku')){
+            throw new BadRequestHttpException("Request parameters values does not match requirements.");
+        }
+        $sku = $this->getSkuManager()->getByCode($paramFetcher->get('sku'));
         if (false === $sku) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
-
         $view = new View($sku);
-        $group = $this->get('security.context')->isGranted('ROLE_API') ? 'restapi' : 'standard';
-        $view->getSerializationContext()->setGroups(array('Default', $group));
 
         return $view;
     }
@@ -86,7 +97,7 @@ class SkuController extends FOSRestController
      *   }
      * )
      *
-     * @Annotations\View()
+     * @Rest\View()
      *
      * @return FormTypeInterface
      */
@@ -99,10 +110,10 @@ class SkuController extends FOSRestController
      * Creates a new sku from the submitted data.
      *
      * @ApiDoc(
-     *   section = "Demo",
+     *   section = "Sku",
      *   resource = true,
      *   resourceDescription="Create a new sku.",
-     *   input = "Meup\DemoBundle\Form\SkuType",
+     *   input = "Meup\Bundle\ApiBundle\Form\SkuType",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     400 = "Returned when the form has errors"
@@ -115,14 +126,14 @@ class SkuController extends FOSRestController
      */
     public function postSkuAction(Request $request)
     {
-        $sku = new Sku();
+        $sku = $this->getSkuFactory()->create();
         $form = $this->createForm(new SkuType(), $sku);
 
         $form->submit($request);
         if ($form->isValid()) {
-            $this->getSkuManager()->set($sku);
+            $this->getSkuManager()->persist($sku);
 
-            return $this->routeRedirectView('get_sku', array('id' => $sku->id));
+            return $this->routeRedirectView('get_sku', array('sku' => $sku->code));
         }
 
         return array(
@@ -134,21 +145,35 @@ class SkuController extends FOSRestController
      * Removes a sku.
      *
      * @ApiDoc(
-     *   section = "Demo",
+     *   section = "Sku",
      *   resource = true,
      *   resourceDescription="Delete an existing sku.",
      *   statusCodes={
-     *     204="Returned when successful"
+     *     204 = "Returned when successful",
+     *     400 = "Returned when sku parameter is missing",
+     *     404 = "Returned when the sku is not found"
      *   }
      * )
      *
-     * @param Request $request the request object
-     * @param int     $sku      the sku code
+     * @Rest\QueryParam(name="sku", nullable=false, strict=true, description="Sku code.")
+     *
+     * @param ParamFetcherInterface $paramFetcher
      *
      * @return RouteRedirectView
+     *
+     * @throws NotFoundHttpException when sku code not exist
      */
-    public function deleteSkuAction(Request $request, $sku)
+    public function deleteSkuAction(ParamFetcherInterface $paramFetcher)
     {
+        if ('' === $paramFetcher->get('sku')){
+            throw new BadRequestHttpException("Request parameters values does not match requirements.");
+        }
+        $sku = $this->getSkuManager()->getByCode($paramFetcher->get('sku'));
+
+        if (false === $sku) {
+            throw $this->createNotFoundException("Sku does not exist.");
+        }
+
         $this->getSkuManager()->delete($sku);
 
         return $this->routeRedirectView('get_sku', array(), Codes::HTTP_NO_CONTENT);
