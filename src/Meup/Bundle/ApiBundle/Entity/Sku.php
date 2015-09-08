@@ -2,29 +2,29 @@
 
 namespace Meup\Bundle\ApiBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use \DateTime;
 use Meup\Bundle\ApiBundle\Model\Sku as SkuModel;
 
 /**
  * Author: c. Boissieux
  *
- * Sku
+ * Sku entity
  */
-class Sku implements  SkuModel
+class Sku extends SkuModel
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
     /**
-     * @var datetime
+     * @var Datetime
      */
     private $createdAt;
 
     /**
-     * @var datetime
+     * @var Datetime
      */
     private $deletedAt;
 
@@ -34,7 +34,7 @@ class Sku implements  SkuModel
      */
     public function __construct()
     {
-        $this->createdAt = new \DateTime('now');
+        $this->createdAt = new DateTime();
     }
 
     /**
@@ -51,18 +51,20 @@ class Sku implements  SkuModel
      * Set id
      *
      * @param string
-     * @return Sku
+     *
+     * @return self
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return datetime
+     * @return Datetime
      */
     public function getCreatedAt()
     {
@@ -70,21 +72,23 @@ class Sku implements  SkuModel
     }
 
     /**
-    * Set createdAt
-    *
-    * @param datetime $createdAt
-    * @return Sku
-    */
+     * Set createdAt
+     *
+     * @param Datetime $createdAt
+     *
+     * @return self
+     */
     public function setCreatedAt(DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return datetime
+     * @return Datetime
      */
     public function getDeletedAt()
     {
@@ -94,12 +98,14 @@ class Sku implements  SkuModel
     /**
      * Set deletedAt
      *
-     * @param datetime $deletedAt
-     * @return Sku
+     * @param Datetime $deletedAt
+     *
+     * @return self
      */
     public function setDeletedAt(DateTime $deletedAt)
     {
         $this->deletedAt = $deletedAt;
+
         return $this;
     }
 

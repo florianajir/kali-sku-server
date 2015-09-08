@@ -1,23 +1,31 @@
 <?php
-
 namespace Meup\Bundle\ApiBundle\Model;
-
 
 /**
  * Author: c. Boissieux
  *
  */
-
-class Sku {
-
+class Sku
+{
+    /**
+     * @var string
+     */
     protected $code;
 
+    /**
+     * @var string
+     */
     protected $project;
 
+    /**
+     * @var string
+     */
     protected $foreignType;
 
+    /**
+     * @var string
+     */
     protected $foreignId;
-
 
     /**
      * Get code
@@ -33,11 +41,13 @@ class Sku {
      * Set code
      *
      * @param string $code
-     * @return Sku
+     *
+     * @return self
      */
     public function setCode($code)
     {
         $this->code = $code;
+
         return $this;
     }
 
@@ -55,11 +65,13 @@ class Sku {
      * Set project
      *
      * @param string $project
-     * @return Sku
+     *
+     * @return self
      */
     public function setProject($project)
     {
         $this->project = $project;
+
         return $this;
     }
 
@@ -77,11 +89,13 @@ class Sku {
      * Set foreignType
      *
      * @param string $foreignType
-     * @return Sku
+     *
+     * @return self
      */
     public function setforeignType($foreignType)
     {
         $this->foreignType = $foreignType;
+
         return $this;
     }
 
@@ -99,12 +113,13 @@ class Sku {
      * Set foreignId
      *
      * @param string $foreignId
-     * @return Sku
+     *
+     * @return self
      */
     public function setForeignId($foreignId)
     {
         $this->foreignId = $foreignId;
+
         return $this;
     }
-
 }
