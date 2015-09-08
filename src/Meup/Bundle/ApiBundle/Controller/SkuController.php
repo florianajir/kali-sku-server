@@ -108,7 +108,7 @@ class SkuController extends FOSRestController
      */
     public function newSkuAction()
     {
-        return $this->createForm(new SkuType());
+        return $this->createForm('sku');
     }
 
     /**
@@ -132,13 +132,13 @@ class SkuController extends FOSRestController
     public function postSkuAction(Request $request)
     {
         $sku = $this->getSkuFactory()->create();
-        $form = $this->createForm(new SkuType(), $sku);
+        $form = $this->createForm('sku', $sku);
 
         $form->submit($request);
         if ($form->isValid()) {
             $this->getSkuManager()->create($sku);
 
-            return $this->routeRedirectView('get_sku', array('sku' => $sku->code));
+            return $this->routeRedirectView('get_sku', array('sku' => $sku->getCode()));
         }
 
         return array(
