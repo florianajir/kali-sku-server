@@ -7,7 +7,7 @@ use \DateTime;
 use Meup\Bundle\ApiBundle\Model\Sku as SkuModel;
 
 /**
- * Author: c. Boissieux
+ * @author  c. Boissieux <christophe@1001pharmacies.com>
  *
  * Sku
  */

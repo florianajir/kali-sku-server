@@ -4,11 +4,12 @@ namespace Meup\Bundle\ApiBundle\Model;
 
 
 /**
- * Author: c. Boissieux
+ * @author  c. Boissieux <christophe@1001pharmacies.com>
  *
  */
 
-class Sku {
+class Sku implements SkuInterface
+{
 
     protected $code;
 
@@ -20,9 +21,7 @@ class Sku {
 
 
     /**
-     * Get code
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getCode()
     {
@@ -30,10 +29,7 @@ class Sku {
     }
 
     /**
-     * Set code
-     *
-     * @param string $code
-     * @return Sku
+     * {@inheritDoc}
      */
     public function setCode($code)
     {
@@ -42,9 +38,7 @@ class Sku {
     }
 
     /**
-     * Get project
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getProject()
     {
@@ -52,10 +46,7 @@ class Sku {
     }
 
     /**
-     * Set project
-     *
-     * @param string $project
-     * @return Sku
+     * {@inheritDoc}
      */
     public function setProject($project)
     {
@@ -64,9 +55,7 @@ class Sku {
     }
 
     /**
-     * Get foreignerType
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getForeignType()
     {
@@ -74,10 +63,7 @@ class Sku {
     }
 
     /**
-     * Set foreignType
-     *
-     * @param string $foreignType
-     * @return Sku
+     * {@inheritDoc}
      */
     public function setforeignType($foreignType)
     {
@@ -86,9 +72,7 @@ class Sku {
     }
 
     /**
-     * Get foreignId
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getForeignId()
     {
@@ -96,10 +80,7 @@ class Sku {
     }
 
     /**
-     * Set foreignId
-     *
-     * @param string $foreignId
-     * @return Sku
+     * {@inheritDoc}
      */
     public function setForeignId($foreignId)
     {
