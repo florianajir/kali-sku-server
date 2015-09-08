@@ -1,0 +1,7 @@
+parameters:
+#    meup_api.example.class: Meup\Bundle\ApiBundle\Example
+
+services:
+#    meup_api.example:
+#        class: %meup_api.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

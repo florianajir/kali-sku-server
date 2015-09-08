@@ -1,0 +1,3 @@
+meup_ui_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: MeupUIBundle:Default:index }

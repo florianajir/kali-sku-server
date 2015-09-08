@@ -1,0 +1,21 @@
+meup_ui:
+    resource: "@MeupUIBundle/Resources/config/routing.yml"
+    prefix:   /
+
+meup_api:
+    resource: "@MeupApiBundle/Resources/config/routing.yml"
+    prefix:   /api
+
+NelmioApiDocBundle:
+  resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+  prefix:   /doc
+
+NelmioSwagger:
+  resource: "@NelmioApiDocBundle/Resources/config/swagger_routing.yml"
+  prefix:   /swagger
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"

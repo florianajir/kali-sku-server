@@ -1,0 +1,20 @@
+center:
+  list:
+    link: retour à la liste de centers
+    headline: centers disponibles
+    empty: aucune center
+  new:
+    link: créer une nouvelle center
+    headline: Créer une nouvelle center
+    submit: ajouter une center
+  edit:
+    link: editer
+    headline: Editer la center %id%
+    submit: Mettre à jour la center
+  remove:
+    link: supprimer
+  offset: offset
+  limit: limite
+api:
+  doc:
+    link: API documentation

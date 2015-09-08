@@ -1,0 +1,34 @@
+Meup\DemoBundle\Model\CenterCollection:
+  exclusion_policy: ALL
+  xml_root_name: centers
+  properties:
+    centers:
+      expose: true
+      type: array<Meup\DemoBundle\Model\Center>
+      xml_list:
+        inline: true
+        entry_name: center
+    offset:
+      expose: true
+      type: integer
+      xml_attribute: true
+    limit:
+      expose: true
+      type: integer
+      xml_attribute: true
+  relations:
+    -
+      rel: self
+      href:
+        route: get_centers
+        absolute: true
+    -
+      rel: center
+      href:
+        route: get_center
+        absolute: true
+        generator: templated_uri
+        parameters:
+          id: "{id}"
+      attributes:
+        templated: true
