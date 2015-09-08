@@ -1,7 +1,9 @@
 parameters:
-#    meup_api.example.class: Meup\Bundle\ApiBundle\Example
+    meup_kali.sku_model.class:   Meup\Bundle\ApiBundle\Model\Sku
+    meup_kali.sku_factory.class: Meup\Bundle\ApiBundle\Factory\SkuFactory
 
 services:
-#    meup_api.example:
-#        class: %meup_api.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    meup_kali.sku_factory:
+        class: %meup_kali.sku_factory.class%
+        arguments:
+            - %meup_kali.sku_model.class%
