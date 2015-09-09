@@ -24,7 +24,7 @@ services:
             - %default_sku_code_length%
             - %default_sku_code_alphabet%
 
-    meup_kali.sku_form.sku:
-        class: meup_kali.sku_form_type.class
+    meup_kali.sku_form_type:
+        class: %meup_kali.sku_form_type.class%
         tags:
             - { name: form.type, alias: sku }

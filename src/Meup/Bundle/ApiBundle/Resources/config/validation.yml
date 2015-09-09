@@ -1,0 +1,4 @@
+Meup\Bundle\ApiBundle\Model\Sku:
+    getters:
+        project:
+            - NotBlank:
