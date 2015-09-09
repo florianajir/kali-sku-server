@@ -29,6 +29,11 @@ class Sku implements SkuInterface
     protected $foreignId;
 
     /**
+     * @var string
+     */
+    protected $permalink;
+
+    /**
      * {@inheritDoc}
      */
     public function getCode()
@@ -96,6 +101,24 @@ class Sku implements SkuInterface
     public function setForeignId($foreignId)
     {
         $this->foreignId = $foreignId;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPermalink()
+    {
+        return $this->permalink;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPermalink($permalink)
+    {
+        $this->permalink = $permalink;
 
         return $this;
     }

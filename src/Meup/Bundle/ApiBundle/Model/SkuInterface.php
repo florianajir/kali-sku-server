@@ -21,7 +21,8 @@ interface SkuInterface
      * Set code
      *
      * @param string $code
-     * @return Sku
+     *
+     * @return self
      */
     public function setCode($code);
 
@@ -36,7 +37,8 @@ interface SkuInterface
      * Set project
      *
      * @param string $project
-     * @return Sku
+     *
+     * @return self
      */
     public function setProject($project);
 
@@ -51,7 +53,8 @@ interface SkuInterface
      * Set foreignType
      *
      * @param string $foreignType
-     * @return Sku
+     *
+     * @return self
      */
     public function setforeignType($foreignType);
 
@@ -66,7 +69,20 @@ interface SkuInterface
      * Set foreignId
      *
      * @param string $foreignId
-     * @return Sku
+     *
+     * @return self
      */
     public function setForeignId($foreignId);
+
+    /**
+     * @return string
+     */
+    public function getPermalink();
+
+    /**
+     * @param string $permalink
+     *
+     * @return self
+     */
+    public function setPermalink($permalink);
 }

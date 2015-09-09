@@ -25,3 +25,6 @@ Meup\Bundle\ApiBundle\Entity\Sku:
         deletedAt:
             type: datetime
             nullable: true
+        permalink:
+            type: string
+            nullable: true

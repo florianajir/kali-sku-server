@@ -38,6 +38,9 @@ class SkuType extends AbstractType
             'description' => 'Id of the entity to be skued',
             'property_path' => 'foreignId'
         ));
+        $builder->add('permalink', 'text', array(
+            'description' => 'Permanent link of the entity.',
+        ));
     }
 
     /**
