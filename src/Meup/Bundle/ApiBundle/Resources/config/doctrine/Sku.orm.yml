@@ -13,18 +13,22 @@ Meup\Bundle\ApiBundle\Entity\Sku:
         project:
             type: string
             nullable: false
-        foreign_type:
+        foreignType:
             type: string
             nullable: false
-        foreign_id:
+            column: foreign_type
+        foreignId:
             type: string
             nullable: false
+            column: foreign_id
         createdAt:
             type: datetime
             nullable: false
+            column: created_at
         deletedAt:
             type: datetime
             nullable: true
+            column: deleted_at
         permalink:
             type: string
             nullable: true
