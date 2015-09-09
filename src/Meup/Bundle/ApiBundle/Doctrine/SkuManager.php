@@ -8,7 +8,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Meup\Bundle\ApiBundle\Entity\Sku as SkuEntity;
 use Meup\Bundle\ApiBundle\Manager\SkuManager as BaseManager;
 use Meup\Bundle\ApiBundle\Model\SkuInterface;
-use Meup\Bundle\ApiBundle\Service\SkuCodeGeneratorInterface;
 
 /**
  * Class SkuManager
@@ -28,39 +27,13 @@ class SkuManager extends BaseManager
     protected $repository;
 
     /**
-     * @var SkuCodeGeneratorInterface
+     * @param ObjectManager $om
+     * @param string        $class
      */
-    protected $skuCodeGenerator;
-
-    /**
-     * @param string                    $class
-     * @param ObjectManager             $om
-     * @param SkuCodeGeneratorInterface $skuCodeGenerator
-     */
-    public function __construct(
-        $class,
-        ObjectManager $om,
-        SkuCodeGeneratorInterface $skuCodeGenerator
-    ) {
+    public function __construct(ObjectManager $om, $class)
+    {
         $this->om = $om;
         $this->repository = $om->getRepository($class);
-        $this->skuCodeGenerator = $skuCodeGenerator;
-    }
-
-    /**
-     * @param SkuInterface $sku
-     *
-     * @return SkuInterface
-     */
-    public function create(SkuInterface $sku)
-    {
-        $sku->setCode(null);
-
-        while ($sku->getCode() === null || $this->exists($sku->getCode())) {
-            $sku->setCode($this->skuCodeGenerator->generateSkuCode());
-        }
-
-        return $this->persist($sku);
     }
 
     /**
@@ -72,7 +45,7 @@ class SkuManager extends BaseManager
      */
     public function exists($skuCode)
     {
-        $sku = $this->repository->findBy(
+        $sku = $this->repository->findOneBy(
             array(
                 'code' => $skuCode
             )

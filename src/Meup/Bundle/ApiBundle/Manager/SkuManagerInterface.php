@@ -20,13 +20,6 @@ interface SkuManagerInterface
     public function exists($skuCode);
 
     /**
-     * @param SkuInterface $sku
-     *
-     * @return SkuInterface
-     */
-    public function create(SkuInterface $sku);
-
-    /**
      * Get a sku by his code or false if not exists
      *
      * @param string $skuCode

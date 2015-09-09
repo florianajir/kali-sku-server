@@ -40,6 +40,7 @@ class SkuType extends AbstractType
         ));
         $builder->add('permalink', 'text', array(
             'description' => 'Permanent link of the entity.',
+            'required'    => false,
         ));
     }
 

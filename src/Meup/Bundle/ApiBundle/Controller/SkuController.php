@@ -12,13 +12,15 @@ namespace Meup\Bundle\ApiBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
-use FOS\RestBundle\View\RouteRedirectView;
 use FOS\RestBundle\View\View;
+
 use Meup\Bundle\ApiBundle\Factory\SkuFactory;
 use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;
+use Meup\Bundle\ApiBundle\Service\SkuCodeGeneratorInterface;
+
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -31,6 +33,30 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class SkuController extends FOSRestController
 {
+    /**
+     * @return SkuCodeGeneratorInterface
+     */
+    private function getSkuCodeGenerator()
+    {
+        return $this->get('meup_kali.sku_generator');
+    }
+
+    /**
+     * @return SkuFactory
+     */
+    private function getSkuFactory()
+    {
+        return $this->get('meup_kali.sku_factory');
+    }
+
+    /**
+     * @return SkuManagerInterface
+     */
+    private function getSkuManager()
+    {
+        return $this->get('meup_kali.sku_manager');
+    }
+
     /**
      * Get a sku.
      *
@@ -74,61 +100,43 @@ class SkuController extends FOSRestController
     }
 
     /**
-     * @return SkuManagerInterface
-     */
-    private function getSkuManager()
-    {
-        return $this->get('meup_kali.sku_manager');
-    }
-
-    /**
      * Creates a new sku from the submitted data.
      *
      * @ApiDoc(
      *   section = "Sku",
      *   resource = true,
      *   resourceDescription="Create a new sku.",
-     *   input = "Meup\Bundle\ApiBundle\Form\SkuType",
+     *   input = "Meup\Bundle\ApiBundle\Form\Type\SkuType",
      *   statusCodes = {
-     *     200 = "Returned when successful",
+     *     201 = "Returned when successful",
      *     400 = "Returned when the form has errors"
      *   }
      * )
      *
-     * @Rest\RequestParam(
-     *      name="sku",
-     *      nullable=false,
-     *      strict=true,
-     *      description="Sku code."
-     * )
-     *
      * @param Request $request the request object
      *
-     * @return FormTypeInterface|RouteRedirectView
+     * @return FormTypeInterface|View
      */
     public function postSkuAction(Request $request)
     {
+        $manager = $this->getSkuManager();
         $sku = $this->getSkuFactory()->create();
         $form = $this->createForm('sku', $sku);
 
         $form->submit($request);
         if ($form->isValid()) {
-            $this->getSkuManager()->create($sku);
+            $generator = $this->getSkuCodeGenerator();
+            while ($sku->getCode() === null || $manager->exists($sku->getCode())) {
+                $sku->setCode($generator->generateSkuCode());
+            }
+            $manager->persist($sku);
 
-            return $this->routeRedirectView('get_sku', array('sku' => $sku->getCode()));
+            return new View($sku, Codes::HTTP_CREATED);
         }
 
         return array(
             'form' => $form
         );
-    }
-
-    /**
-     * @return SkuFactory
-     */
-    private function getSkuFactory()
-    {
-        return $this->get('meup_kali.sku_factory');
     }
 
     /**
@@ -149,29 +157,26 @@ class SkuController extends FOSRestController
      *      name="sku",
      *      nullable=false,
      *      strict=true,
-     *      description="Sku code."
+     *      description="Sku code"
      * )
      *
-     * @param ParamFetcherInterface $paramFetcher
+     * @param string $sku
      *
-     * @return RouteRedirectView
+     * @return View
      *
+     * @throws BadRequestHttpException when sku code is missing
      * @throws NotFoundHttpException when sku code not exist
      */
-    public function deleteSkuAction(ParamFetcherInterface $paramFetcher)
+    public function deleteSkuAction($sku)
     {
-        if ('' === $paramFetcher->get('sku')) {
+        if (empty($sku)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
-        $sku = $this->getSkuManager()->getByCode($paramFetcher->get('sku'));
-
-        if (false === $sku) {
+        if (null === $sku = $this->getSkuManager()->getByCode($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
-
         $this->getSkuManager()->delete($sku);
 
-        return $this->routeRedirectView('get_sku', array(), Codes::HTTP_NO_CONTENT);
+        return new View($sku, Codes::HTTP_NO_CONTENT);
     }
-
 }

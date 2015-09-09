@@ -5,6 +5,9 @@ Meup\Bundle\ApiBundle\Model\Sku:
   accessor_order: alphabetical
 
   properties:
+    code:
+      expose: true
+      type: string
     project:
       expose: true
       type: string

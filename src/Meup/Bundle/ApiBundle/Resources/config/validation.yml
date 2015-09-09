@@ -1,8 +1,11 @@
 Meup\Bundle\ApiBundle\Model\Sku:
-    getters:
+    properties:
         project:
-            - NotBlank:
+            - NotBlank: ~
+            - NotNull: ~
         foreignType:
-            - NotBlank:
+            - NotBlank: ~
+            - NotNull: ~
         foreignId:
-            - NotBlank:
+            - NotBlank: ~
+            - NotNull: ~
