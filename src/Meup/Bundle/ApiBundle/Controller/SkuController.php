@@ -173,7 +173,7 @@ class SkuController extends FOSRestController
      */
     public function deleteSkuAction(ParamFetcherInterface $paramFetcher)
     {
-        if ('' === $paramFetcher->get('sku')){
+        if ('' === $paramFetcher->get('sku')) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
         $sku = $this->getSkuManager()->getByCode($paramFetcher->get('sku'));
