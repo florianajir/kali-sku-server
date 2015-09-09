@@ -18,6 +18,7 @@ use FOS\RestBundle\View\RouteRedirectView;
 use FOS\RestBundle\View\View;
 use Meup\Bundle\ApiBundle\Factory\SkuFactory;
 use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
