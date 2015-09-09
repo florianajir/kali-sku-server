@@ -122,4 +122,9 @@ class Sku implements SkuInterface
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public abstract function isActive();
 }

@@ -107,4 +107,12 @@ class Sku extends SkuModel
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return empty($this->deletedAt);
+    }
 }
