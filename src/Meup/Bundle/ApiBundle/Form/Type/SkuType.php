@@ -50,7 +50,7 @@ class SkuType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'         => 'Meup\Bundle\ApiBundle\Model\Sku',
-            'intention'          => 'sku',
+            'csrf_protection'    => false,
             'translation_domain' => 'MeupSkuBundle'
         ));
     }
