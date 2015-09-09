@@ -17,3 +17,6 @@ Meup\Bundle\ApiBundle\Model\Sku:
       expose: true
       type: string
       serialized_name: id
+    permalink:
+      expose: true
+      type: string
