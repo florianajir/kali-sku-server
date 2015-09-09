@@ -102,17 +102,17 @@ class SkuManager extends BaseManager
      *
      * @param string $skuCode
      *
-     * @return SkuInterface|bool
+     * @return SkuInterface
      */
     public function getByCode($skuCode)
     {
-        $sku = $this->repository->findBy(
+        $sku = $this->repository->findOneBy(
             array(
                 'code' => $skuCode
             )
         );
 
-        return empty($sku) ? false : $sku;
+        return $sku;
     }
 
     /**

@@ -1,8 +1,0 @@
-Meup\DemoBundle\Model\Event:
-  exclusion_policy: ALL
-  xml_root_name: event
-  properties:
-    name:
-      expose: true
-    date:
-      expose: true

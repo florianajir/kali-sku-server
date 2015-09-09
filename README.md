@@ -4,8 +4,8 @@ Kali-Server provides a RESTful API for centralize sku management between web-app
 
 ## Summary
 
-- [Install](Resources/doc/api/install.md)
-- [Generate a Client](Resources/doc/api/usage.md)
+- [Install](resources/doc/api/install.md)
+- [Generate a Client](resources/doc/api/usage.md)
 - [Overview](#overview)
     -    [Headers](#headers)
     -    [Version](#version)

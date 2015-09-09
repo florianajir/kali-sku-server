@@ -9,11 +9,11 @@ Meup\Bundle\ApiBundle\Model\Sku:
       expose: true
       type: string
       serialized_name: project
-    foreign_type:
+    foreignType:
       expose: true
       type: string
       serialized_name: type
-    foreign_id:
+    foreignId:
       expose: true
       type: string
       serialized_name: id

@@ -2,3 +2,7 @@ Meup\Bundle\ApiBundle\Model\Sku:
     getters:
         project:
             - NotBlank:
+        foreignType:
+            - NotBlank:
+        foreignId:
+            - NotBlank:
