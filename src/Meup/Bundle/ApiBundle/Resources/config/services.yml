@@ -9,8 +9,9 @@ services:
     meup_kali.sku_manager:
         class: %meup_kali.sku_manager%
         arguments:
-            - @doctrine.orm.entity_manager
             - %meup_kali.sku_entity.class%
+            - @doctrine.orm.entity_manager
+            - @meup_kali.sku_generator
 
     meup_kali.sku_factory:
         class: %meup_kali.sku_factory.class%
@@ -21,6 +22,7 @@ services:
         class: %meup_kali.sku_generator.class%
         arguments:
             - %default_sku_code_length%
+            - %default_sku_code_alphabet%
 
     meup_kali.sku_form.sku:
         class: meup_kali.sku_form_type.class

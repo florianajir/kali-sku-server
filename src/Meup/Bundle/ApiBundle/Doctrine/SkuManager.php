@@ -5,8 +5,10 @@ namespace Meup\Bundle\ApiBundle\Doctrine;
 use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
-use Meup\Bundle\ApiBundle\Entity\Sku;
+use Meup\Bundle\ApiBundle\Entity\Sku as SkuEntity;
 use Meup\Bundle\ApiBundle\Manager\SkuManager as BaseManager;
+use Meup\Bundle\ApiBundle\Model\SkuInterface;
+use Meup\Bundle\ApiBundle\Service\SkuCodeGeneratorInterface;
 
 /**
  * Class SkuManager
@@ -26,13 +28,39 @@ class SkuManager extends BaseManager
     protected $repository;
 
     /**
-     * @param ObjectManager $om
-     * @param string        $class
+     * @var SkuCodeGeneratorInterface
      */
-    public function __construct(ObjectManager $om, $class)
-    {
+    protected $skuCodeGenerator;
+
+    /**
+     * @param string                    $class
+     * @param ObjectManager             $om
+     * @param SkuCodeGeneratorInterface $skuCodeGenerator
+     */
+    public function __construct(
+        $class,
+        ObjectManager $om,
+        SkuCodeGeneratorInterface $skuCodeGenerator
+    ) {
         $this->om = $om;
         $this->repository = $om->getRepository($class);
+        $this->skuCodeGenerator = $skuCodeGenerator;
+    }
+
+    /**
+     * @param SkuInterface $sku
+     *
+     * @return SkuInterface
+     */
+    public function create(SkuInterface $sku)
+    {
+        $sku->setCode(null);
+
+        while ($sku->getCode() === null || $this->exists($sku->getCode())) {
+            $sku->setCode($this->skuCodeGenerator->generateSkuCode());
+        }
+
+        return $this->persist($sku);
     }
 
     /**
@@ -54,12 +82,12 @@ class SkuManager extends BaseManager
     }
 
     /**
-     * @param Sku  $sku
-     * @param bool $andFlush
+     * @param SkuInterface $sku
+     * @param bool         $andFlush
      *
-     * @return Sku
+     * @return SkuInterface
      */
-    public function persist(Sku $sku, $andFlush = true)
+    public function persist(SkuInterface $sku, $andFlush = true)
     {
         $this->om->persist($sku);
         if ($andFlush) {
@@ -70,14 +98,34 @@ class SkuManager extends BaseManager
     }
 
     /**
-     * @param Sku  $sku
-     * @param bool $andFlush
+     * Get a sku by his code
      *
-     * @return Sku
+     * @param string $skuCode
+     *
+     * @return SkuInterface|bool
      */
-    public function delete(Sku $sku, $andFlush = true)
+    public function getByCode($skuCode)
     {
-        $sku->setDeletedAt(new DateTime());
+        $sku = $this->repository->findBy(
+            array(
+                'code' => $skuCode
+            )
+        );
+
+        return empty($sku) ? false : $sku;
+    }
+
+    /**
+     * @param SkuInterface $sku
+     * @param bool         $andFlush
+     *
+     * @return SkuInterface
+     */
+    public function delete(SkuInterface $sku, $andFlush = true)
+    {
+        if ($sku instanceof SkuEntity) {
+            $sku->setDeletedAt(new DateTime());
+        }
         $this->om->persist($sku);
         if ($andFlush) {
             $this->om->flush();

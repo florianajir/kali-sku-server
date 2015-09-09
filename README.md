@@ -1,6 +1,6 @@
-# 1001Pharmacies Symfony REST Edition
+# Kali-Server
 
-1001Pharmacies Symfony REST Edition provides a RESTful API base project for 1001Phamarcies applications with authentication and versionning.
+Kali-Server provides a RESTful API for centralize sku management between web-applications pool with authentication and versionning.
 
 ## Summary
 

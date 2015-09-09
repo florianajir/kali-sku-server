@@ -1,8 +1,8 @@
 <?php
 namespace Meup\Bundle\ApiBundle\Factory;
 
+use Meup\Bundle\ApiBundle\Model\SkuInterface;
 use ReflectionClass;
-use Meup\Bundle\ApiBundle\Model\Sku;
 
 /**
  * Class SkuFactory
@@ -25,7 +25,7 @@ class SkuFactory
     }
 
     /**
-     * @return Sku
+     * @return SkuInterface
      */
     public function create()
     {

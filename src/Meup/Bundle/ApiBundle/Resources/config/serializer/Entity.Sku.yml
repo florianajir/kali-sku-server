@@ -1,0 +1,13 @@
+Meup\Bundle\ApiBundle\Entity\Sku:
+  exclusion_policy: ALL
+  exclude: false
+  read_only: false
+  accessor_order: alphabetical
+
+  properties:
+    created_at:
+      expose: true
+      type: DateTime
+    deleted_at:
+      expose: true
+      type: DateTime
