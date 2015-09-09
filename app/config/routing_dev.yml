@@ -2,13 +2,8 @@ _welcome:
     pattern:  /
     defaults:
         _controller: FrameworkBundle:Redirect:redirect
-        route: get_centers
+        route: nelmio_api_doc_index
         permanent: true # this for 301
-
-_demo_centers:
-    resource: "@MeupDemoBundle/Controller/CenterController.php"
-    prefix:   /demo
-    type:     rest
 
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"

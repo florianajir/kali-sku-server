@@ -1,4 +1,0 @@
-Meup\DemoBundle\Model\Center:
-    properties:
-        name:
-            - NotBlank: ~
