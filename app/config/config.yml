@@ -73,10 +73,9 @@ fos_rest:
     param_fetcher_listener: true
     view:
         mime_types:
-            json: ['application/vnd.1001pharmacies.api', 'application/json', 'application/json;version=1.0', 'application/json;version=1.1']
+            json: ['application/json']
         view_response_listener: 'force'
         formats:
-            xml:  true
             json: true
         templating_formats:
             html: true
@@ -84,7 +83,7 @@ fos_rest:
         rules:
             - { path: ^/swagger, priorities: [ json ], fallback_format: json, prefer_extension: false }
             - { path: ^/demo, priorities: [ html, json, xml ], fallback_format: ~, prefer_extension: true }
-            - { path: ^/api, priorities: [ html, json, xml ], fallback_format: ~, prefer_extension: true }
+            - { path: ^/api, priorities: [ json ], fallback_format: json, prefer_extension: true }
             - { path: ^/ui, priorities: [ html ], fallback_format: ~, prefer_extension: true }
             - { path: '^/', priorities: [ html, '*/*'], fallback_format: html, prefer_extension: true }
         media_type:

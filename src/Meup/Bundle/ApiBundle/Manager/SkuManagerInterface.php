@@ -31,7 +31,7 @@ interface SkuManagerInterface
      *
      * @param string $skuCode
      *
-     * @return SkuInterface|bool
+     * @return SkuInterface
      */
     public function getByCode($skuCode);
 

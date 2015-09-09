@@ -54,19 +54,18 @@ class SkuController extends FOSRestController
      *      description="Sku code."
      * )
      *
-     * @param ParamFetcherInterface $paramFetcher
+     * @param string $sku
      *
      * @return array
      *
      * @throws NotFoundHttpException when sku code not exist
      */
-    public function getSkuAction(ParamFetcherInterface $paramFetcher)
+    public function getSkuAction($sku)
     {
-        if ('' === $paramFetcher->get('sku')) {
+        if (empty($sku)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
-        $sku = $this->getSkuManager()->getByCode($paramFetcher->get('sku'));
-        if (false === $sku) {
+        if (null === $sku = $this->getSkuManager()->getByCode($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
         $view = new View($sku);
@@ -80,26 +79,6 @@ class SkuController extends FOSRestController
     private function getSkuManager()
     {
         return $this->get('meup_kali.sku_manager');
-    }
-
-    /**
-     * Presents the form to use to create a new sku.
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   resourceDescription="Present a form to create a new sku.",
-     *   statusCodes = {
-     *     200 = "Returned when successful"
-     *   }
-     * )
-     *
-     * @Rest\View()
-     *
-     * @return FormTypeInterface
-     */
-    public function newSkuAction()
-    {
-        return $this->createForm('sku');
     }
 
     /**
