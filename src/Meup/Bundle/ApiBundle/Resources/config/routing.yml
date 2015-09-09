@@ -16,7 +16,8 @@ meup_api_post_sku:
 
 # delete sku
 meup_api_delete_sku:
-    pattern: /
+    pattern: /{sku}
     defaults: { _controller: MeupApiBundle:Sku:deleteSku, _format: json }
     requirements:
         _method: DELETE
+        sku:     "[\d\w]*"

@@ -1,10 +1,12 @@
 Meup\Bundle\ApiBundle\Model\Sku:
   exclusion_policy: ALL
-  exclude: false
   read_only: false
   accessor_order: alphabetical
 
   properties:
+    code:
+      expose: true
+      type: string
     project:
       expose: true
       type: string

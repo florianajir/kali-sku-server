@@ -85,4 +85,9 @@ interface SkuInterface
      * @return self
      */
     public function setPermalink($permalink);
+
+    /**
+     * @return bool
+     */
+    public function isActive();
 }

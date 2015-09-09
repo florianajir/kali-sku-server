@@ -3,13 +3,14 @@ Meup\Bundle\ApiBundle\Entity\Sku:
     table: sku_registry
     fields:
         id:
-            type: string
+            type: integer
             id: true
             generator:
                 strategy: AUTO
         code:
             type: string
             nullable: false
+            unique: true
         project:
             type: string
             nullable: false
