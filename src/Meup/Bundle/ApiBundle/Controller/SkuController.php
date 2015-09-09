@@ -51,7 +51,7 @@ class SkuController extends FOSRestController
      *      name="sku",
      *      nullable=false,
      *      strict=true,
-     *      description="Sku code."
+     *      description="Sku code"
      * )
      *
      * @param string $sku
@@ -93,6 +93,13 @@ class SkuController extends FOSRestController
      *     200 = "Returned when successful",
      *     400 = "Returned when the form has errors"
      *   }
+     * )
+     *
+     * @Rest\RequestParam(
+     *      name="sku",
+     *      nullable=false,
+     *      strict=true,
+     *      description="Sku code."
      * )
      *
      * @param Request $request the request object

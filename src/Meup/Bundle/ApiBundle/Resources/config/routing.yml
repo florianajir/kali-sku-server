@@ -4,7 +4,8 @@ meup_api_get_sku:
     defaults: { _controller: MeupApiBundle:Sku:getSku, _format: json }
     requirements:
         _method: GET
-        sku: "[\d\w]*"
+        sku:     "[\d\w]*"
+        _format: json
 
 # create a new sku
 meup_api_post_sku:

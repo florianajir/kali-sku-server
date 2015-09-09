@@ -119,7 +119,9 @@ fos_oauth_server:
 
 # Nelmio API Doc
 nelmio_api_doc:
-    name: API Documentation
+    cache:
+        enabled: %kernel.debug%
+    name: Kali API Documentation
     request_listener:
         enabled: false
     sandbox:
@@ -129,9 +131,9 @@ nelmio_api_doc:
         swagger_version:      '1.2'
         api_version:          '1.0'
         info:
-            title:                1001Pharmacies Symfony REST Edition
-            description:          A 1001Pharmacies base project for REST APIs
+            title:                Kali-server
+            description:          A SKU registry API
             contact:              technique@1001pharmacies.com
             license:              Copyright (c) 2015 1001pharmacies.com
-            licenseUrl:           https://github.com/1001Pharmacies/symfony-bifrost-edition/blob/master/LICENSE
+            licenseUrl:           https://github.com/1001Pharmacies/kali-server/blob/master/LICENSE
             TermsOfServiceUrl:    null
