@@ -1,13 +1,18 @@
 Meup\Bundle\ApiBundle\Entity\Sku:
   exclusion_policy: ALL
-  exclude: false
   read_only: false
   accessor_order: alphabetical
 
   properties:
-    created_at:
+    createdAt:
       expose: true
       type: DateTime
-    deleted_at:
-      expose: true
+      serialized_name: created_at
+    deletedAt:
       type: DateTime
+      serialized_name: deleted_at
+  virtual_properties:
+    isActive:
+      expose: true
+      type: boolean
+      serialized_name: active

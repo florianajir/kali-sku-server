@@ -3,9 +3,7 @@ namespace Meup\Bundle\ApiBundle\Model;
 
 /**
  * @author  c. Boissieux <christophe@1001pharmacies.com>
- *
  */
-
 class Sku implements SkuInterface
 {
     /**
@@ -126,5 +124,6 @@ class Sku implements SkuInterface
     /**
      * @return bool
      */
-    public abstract function isActive();
+    public function isActive()
+    {}
 }

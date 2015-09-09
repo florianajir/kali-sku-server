@@ -21,7 +21,7 @@ use Meup\Bundle\ApiBundle\Service\SkuCodeGeneratorInterface;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -64,7 +64,7 @@ class SkuController extends FOSRestController
      *   section = "Sku",
      *   resource = true,
      *   resourceDescription="Get a single sku.",
-     *   output = "Meup\Bundle\ApiBundle\Model\Sku",
+     *   output = "Meup\Bundle\ApiBundle\Entity\Sku",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when the center is not found"
@@ -115,7 +115,7 @@ class SkuController extends FOSRestController
      *
      * @param Request $request the request object
      *
-     * @return FormTypeInterface|View
+     * @return FormInterface|View
      */
     public function postSkuAction(Request $request)
     {

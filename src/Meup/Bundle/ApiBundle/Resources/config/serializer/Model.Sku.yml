@@ -1,6 +1,5 @@
 Meup\Bundle\ApiBundle\Model\Sku:
   exclusion_policy: ALL
-  exclude: false
   read_only: false
   accessor_order: alphabetical
 
