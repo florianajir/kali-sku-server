@@ -122,8 +122,8 @@ class SkuController extends FOSRestController
         $manager = $this->getSkuManager();
         $sku = $this->getSkuFactory()->create();
         $form = $this->createForm('sku', $sku);
+        $form->handleRequest($request);
 
-        $form->submit($request);
         if ($form->isValid()) {
             $generator = $this->getSkuCodeGenerator();
             while ($sku->getCode() === null || $manager->exists($sku->getCode())) {
