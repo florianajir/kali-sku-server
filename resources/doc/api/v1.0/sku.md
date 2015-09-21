@@ -108,3 +108,50 @@ active:
 permalink:
 
   * type: string
+
+
+### `PUT` /api/{sku}.{_format} ###
+
+_Edit an sku from the submitted data._
+
+#### Requirements ####
+
+**sku**
+
+  - Requirement: [\d\w]*
+  - Type: string
+
+**_format**
+
+  - Requirement: json
+
+#### Parameters ####
+
+sku:
+
+  * type: object (SkuType)
+  * required: false
+
+sku[project]:
+
+  * type: string
+  * required: true
+  * description: Name of the application
+
+sku[type]:
+
+  * type: string
+  * required: true
+  * description: Type of the entity to be skued
+
+sku[id]:
+
+  * type: string
+  * required: true
+  * description: Id of the entity to be skued
+
+sku[permalink]:
+
+  * type: string
+  * required: false
+  * description: Permanent link of the entity.

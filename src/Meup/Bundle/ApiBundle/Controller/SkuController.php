@@ -140,6 +140,50 @@ class SkuController extends FOSRestController
     }
 
     /**
+     * Edit an sku from the submitted data.
+     *
+     * @ApiDoc(
+     *   section = "Sku",
+     *   resource = true,
+     *   resourceDescription="Edit an sku.",
+     *   input = "Meup\Bundle\ApiBundle\Form\Type\SkuType",
+     *   statusCodes = {
+     *     201 = "Returned when successful",
+     *     400 = "Returned when the form has errors"
+     *   }
+     * )
+     *
+     * @param string  $sku
+     * @param Request $request the request object
+     *
+     * @return FormInterface|View
+     */
+    public function putSkuAction($sku, Request $request)
+    {
+        $manager = $this->getSkuManager();
+
+        if (empty($sku)) {
+            throw new BadRequestHttpException("Request parameters values does not match requirements.");
+        }
+        if (null === $sku = $manager->getByCode($sku)) {
+            throw $this->createNotFoundException("Sku does not exist.");
+        }
+
+        $form = $this->createForm('sku', $sku, array('method' => 'PUT'));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $manager->persist($sku);
+
+            return new View($sku, Codes::HTTP_CREATED);
+        }
+
+        return array(
+            'form' => $form
+        );
+    }
+
+    /**
      * Removes a sku.
      *
      * @ApiDoc(
