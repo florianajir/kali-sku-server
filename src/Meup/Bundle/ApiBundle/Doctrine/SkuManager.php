@@ -37,11 +37,24 @@ class SkuManager extends BaseManager
     }
 
     /**
-     * return true if sku code already exists
-     *
-     * @param string $skuCode
-     *
-     * @return bool
+     * {@inheritdoc}
+     */
+    public function findByUniqueGroup($project, $foreignType, $foreignId)
+    {
+        return $this
+            ->repository
+            ->findOneBy(
+                array(
+                    'project'       => $project,
+                    'foreignType'   => $foreignType,
+                    'foreignId'     => $foreignId
+                )
+            )
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function exists($skuCode)
     {
@@ -55,10 +68,7 @@ class SkuManager extends BaseManager
     }
 
     /**
-     * @param SkuInterface $sku
-     * @param bool         $andFlush
-     *
-     * @return SkuInterface
+     * {@inheritdoc}
      */
     public function persist(SkuInterface $sku, $andFlush = true)
     {
@@ -71,11 +81,7 @@ class SkuManager extends BaseManager
     }
 
     /**
-     * Get a sku by his code
-     *
-     * @param string $skuCode
-     *
-     * @return SkuInterface
+     * {@inheritdoc}
      */
     public function getByCode($skuCode)
     {
@@ -89,10 +95,7 @@ class SkuManager extends BaseManager
     }
 
     /**
-     * @param SkuInterface $sku
-     * @param bool         $andFlush
-     *
-     * @return SkuInterface
+     * {@inheritdoc}
      */
     public function delete(SkuInterface $sku, $andFlush = true)
     {

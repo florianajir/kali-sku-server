@@ -10,6 +10,18 @@ use Meup\Bundle\ApiBundle\Model\SkuInterface;
  */
 interface SkuManagerInterface
 {
+
+    /**
+     * find a unique sku by it's attributes
+     *
+     * @param string $project       Project name
+     * @param string $foreignType   Object type
+     * @param string $foreignId     Object id
+     *
+     * @return SkuInterface
+     */
+    public function findByUniqueGroup($project, $foreignType, $foreignId);
+
     /**
      * return true if sku code already exists
      *

@@ -115,6 +115,7 @@ class SkuController extends FOSRestController
      *   resourceDescription="Create a new sku.",
      *   input = "Meup\Bundle\ApiBundle\Form\Type\SkuType",
      *   statusCodes = {
+     *     200 = "Returned when existing sku found",
      *     201 = "Returned when successful",
      *     400 = "Returned when the form has errors"
      *   }
@@ -132,6 +133,17 @@ class SkuController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+            $existantSku = $manager->findByUniqueGroup(
+                $form->get('project')->getViewData(),
+                $form->get('type')->getViewData(),
+                $form->get('id')->getViewData()
+            );
+
+            if (false === is_null($existantSku)) {
+                return new View($existantSku);
+            }
+
             $generator = $this->getSkuCodeGenerator();
             while ($sku->getCode() === null || $manager->exists($sku->getCode())) {
                 $sku->setCode($generator->generateSkuCode());
