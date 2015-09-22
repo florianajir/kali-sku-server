@@ -24,12 +24,14 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class SkuController
  *
  * @author Florian AJIR <florian@1001pharmacies.com>
+ * @author Loïc AMBROSINI <loic@1001pharmacies.com>
  */
 class SkuController extends FOSRestController
 {
@@ -67,7 +69,8 @@ class SkuController extends FOSRestController
      *   output = "Meup\Bundle\ApiBundle\Entity\Sku",
      *   statusCodes = {
      *     200 = "Returned when successful",
-     *     404 = "Returned when the center is not found"
+     *     404 = "Returned when not found",
+     *     410 = "Returned when deleted"
      *   }
      * )
      *
@@ -94,6 +97,10 @@ class SkuController extends FOSRestController
         if (null === $sku = $this->getSkuManager()->getByCode($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
+        if (false === $sku->isActive()) {
+            throw new GoneHttpException("Sku is gone.");
+        }
+
         $view = new View($sku);
 
         return $view;
