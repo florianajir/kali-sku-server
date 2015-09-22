@@ -13,6 +13,7 @@ use Meup\Bundle\ApiBundle\Model\SkuInterface;
  * Class SkuManager
  *
  * @author florianajir <florian@1001pharmacies.com>
+ * @author Loïc Ambrosini <loic@1001pharmacies.com>
  */
 class SkuManager extends BaseManager
 {
@@ -58,11 +59,14 @@ class SkuManager extends BaseManager
      */
     public function exists($skuCode)
     {
-        $sku = $this->repository->findOneBy(
-            array(
-                'code' => $skuCode
+        $sku = $this
+            ->repository
+            ->findOneBy(
+                array(
+                    'code' => $skuCode
+                )
             )
-        );
+        ;
 
         return !empty($sku);
     }
@@ -85,11 +89,14 @@ class SkuManager extends BaseManager
      */
     public function getByCode($skuCode)
     {
-        $sku = $this->repository->findOneBy(
-            array(
-                'code' => $skuCode
+        $sku = $this
+            ->repository
+            ->findOneBy(
+                array(
+                    'code' => $skuCode
+                )
             )
-        );
+        ;
 
         return $sku;
     }
