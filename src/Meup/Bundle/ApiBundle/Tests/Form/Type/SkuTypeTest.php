@@ -19,7 +19,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
  *
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
  */
-class SkuTypeTest  extends TypeTestCase
+class SkuTypeTest extends TypeTestCase
 {
     public function testSubmitValidData()
     {

@@ -9,6 +9,7 @@
  */
 
 namespace Meup\Bundle\ApiBundle\Tests\Service;
+
 use Meup\Bundle\ApiBundle\Service\SkuCodeGenerator;
 use Meup\Bundle\ApiBundle\Tests\BaseTestCase;
 

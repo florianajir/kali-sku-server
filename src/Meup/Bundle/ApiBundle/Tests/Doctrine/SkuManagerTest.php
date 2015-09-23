@@ -184,5 +184,4 @@ class SkuManagerTest extends BaseTestCase
             ->getMock()
         ;
     }
-
 }

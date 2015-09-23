@@ -135,7 +135,6 @@ class SkuController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-
             $existantSku = $manager->findByUniqueGroup(
                 $form->get('project')->getViewData(),
                 $form->get('type')->getViewData(),

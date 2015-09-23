@@ -9,6 +9,7 @@
  */
 
 namespace Meup\Bundle\ApiBundle\Tests\Factory;
+
 use Meup\Bundle\ApiBundle\Factory\SkuFactory;
 use Meup\Bundle\ApiBundle\Tests\BaseTestCase;
 

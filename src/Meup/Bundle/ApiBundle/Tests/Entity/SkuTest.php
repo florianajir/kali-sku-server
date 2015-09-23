@@ -9,6 +9,7 @@
  */
 
 namespace Meup\Bundle\ApiBundle\Entity;
+
 use Meup\Bundle\ApiBundle\Tests\BaseTestCase;
 
 /**
