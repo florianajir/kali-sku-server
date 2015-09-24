@@ -11,14 +11,13 @@
 namespace Meup\Bundle\ApiBundle\Tests\Service;
 
 use Meup\Bundle\ApiBundle\Service\SkuCodeGenerator;
-use Meup\Bundle\ApiBundle\Tests\BaseTestCase;
 
 /**
  * Class SkuCodeGeneratorTest
  *
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
  */
-class SkuCodeGeneratorTest extends BaseTestCase
+class SkuCodeGeneratorTest extends \PHPUnit_Framework_TestCase
 {
     public function testGenerateSkuCode()
     {

@@ -10,14 +10,12 @@
 
 namespace Meup\Bundle\ApiBundle\Entity;
 
-use Meup\Bundle\ApiBundle\Tests\BaseTestCase;
-
 /**
  * Class SkuTest
  *
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
  */
-class SkuTest extends BaseTestCase
+class SkuTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstructor()
     {

@@ -18,7 +18,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
  *
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
  */
-abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
+abstract class DoctrineTestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|ObjectRepository

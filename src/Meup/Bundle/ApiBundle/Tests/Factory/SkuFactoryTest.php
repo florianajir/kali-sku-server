@@ -11,14 +11,13 @@
 namespace Meup\Bundle\ApiBundle\Tests\Factory;
 
 use Meup\Bundle\ApiBundle\Factory\SkuFactory;
-use Meup\Bundle\ApiBundle\Tests\BaseTestCase;
 
 /**
  * Class SkuFactoryTest
  *
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
  */
-class SkuFactoryTest extends BaseTestCase
+class SkuFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateSkuObject()
     {

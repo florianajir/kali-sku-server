@@ -12,14 +12,14 @@ namespace Meup\Bundle\ApiBundle\Tests\Doctrine;
 
 use Meup\Bundle\ApiBundle\Doctrine\SkuManager;
 use Meup\Bundle\ApiBundle\Model\SkuInterface;
-use Meup\Bundle\ApiBundle\Tests\BaseTestCase;
+use Meup\Bundle\ApiBundle\Tests\DoctrineTestCase;
 
 /**
  * Class SkuManagerTest
  *
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
  */
-class SkuManagerTest extends BaseTestCase
+class SkuManagerTest extends DoctrineTestCase
 {
     public function testFindSkuByUniquesParameters()
     {

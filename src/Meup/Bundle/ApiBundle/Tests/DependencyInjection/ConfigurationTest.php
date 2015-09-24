@@ -13,14 +13,13 @@ namespace Meup\Bundle\ApiBundle\Tests\DependencyInjection;
 use Meup\Bundle\ApiBundle\DependencyInjection\MeupApiExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Meup\Bundle\ApiBundle\DependencyInjection\Configuration;
-use Meup\Bundle\ApiBundle\Tests\BaseTestCase;
 
 /**
  * Class ConfigurationTest
  *
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
  */
-class ConfigurationTest extends BaseTestCase
+class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var MeupApiExtension
