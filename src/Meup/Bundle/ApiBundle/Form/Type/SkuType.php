@@ -28,18 +28,18 @@ class SkuType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('project', 'text', array(
-            'description' => 'Name of the application',
+            'label' => 'Name of the application',
         ));
         $builder->add('type', 'text', array(
-            'description' => 'Type of the entity to be skued',
+            'label' => 'Type of the entity to be skued',
             'property_path' => 'foreignType'
         ));
         $builder->add('id', 'text', array(
-            'description' => 'Id of the entity to be skued',
+            'label' => 'Id of the entity to be skued',
             'property_path' => 'foreignId'
         ));
         $builder->add('permalink', 'text', array(
-            'description' => 'Permanent link of the entity.',
+            'label' => 'Permanent link of the entity.',
             'required'    => false,
         ));
     }
@@ -50,7 +50,7 @@ class SkuType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => 'Meup\Bundle\ApiBundle\Model\Sku',
+            'data_class'         => 'Meup\Bundle\ApiBundle\Entity\Sku',
             'csrf_protection'    => false,
             'translation_domain' => 'MeupSkuBundle'
         ));

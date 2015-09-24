@@ -14,6 +14,15 @@ meup_api_post_sku:
     requirements:
         _method: POST
 
+# edit an sku
+meup_api_edit_sku:
+    pattern: /{sku}.{_format}
+    defaults: { _controller: MeupApiBundle:Sku:putSku, _format: json }
+    requirements:
+        _method: PUT
+        sku:     "[\d\w]*"
+        _format: json
+
 # delete sku
 meup_api_delete_sku:
     pattern: /{sku}

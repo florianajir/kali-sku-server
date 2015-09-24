@@ -24,12 +24,14 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class SkuController
  *
  * @author Florian AJIR <florian@1001pharmacies.com>
+ * @author Loïc AMBROSINI <loic@1001pharmacies.com>
  */
 class SkuController extends FOSRestController
 {
@@ -67,7 +69,8 @@ class SkuController extends FOSRestController
      *   output = "Meup\Bundle\ApiBundle\Entity\Sku",
      *   statusCodes = {
      *     200 = "Returned when successful",
-     *     404 = "Returned when the center is not found"
+     *     404 = "Returned when not found",
+     *     410 = "Returned when deleted"
      *   }
      * )
      *
@@ -94,6 +97,10 @@ class SkuController extends FOSRestController
         if (null === $sku = $this->getSkuManager()->getByCode($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
+        if (false === $sku->isActive()) {
+            throw new GoneHttpException("Sku is gone.");
+        }
+
         $view = new View($sku);
 
         return $view;
@@ -108,6 +115,7 @@ class SkuController extends FOSRestController
      *   resourceDescription="Create a new sku.",
      *   input = "Meup\Bundle\ApiBundle\Form\Type\SkuType",
      *   statusCodes = {
+     *     200 = "Returned when existing sku found",
      *     201 = "Returned when successful",
      *     400 = "Returned when the form has errors"
      *   }
@@ -122,13 +130,67 @@ class SkuController extends FOSRestController
         $manager = $this->getSkuManager();
         $sku = $this->getSkuFactory()->create();
         $form = $this->createForm('sku', $sku);
+        $form->handleRequest($request);
 
-        $form->submit($request);
         if ($form->isValid()) {
+            $existantSku = $manager->findByUniqueGroup(
+                $form->get('project')->getViewData(),
+                $form->get('type')->getViewData(),
+                $form->get('id')->getViewData()
+            );
+
+            if (false === is_null($existantSku)) {
+                return new View($existantSku);
+            }
+
             $generator = $this->getSkuCodeGenerator();
             while ($sku->getCode() === null || $manager->exists($sku->getCode())) {
                 $sku->setCode($generator->generateSkuCode());
             }
+            $manager->persist($sku);
+
+            return new View($sku, Codes::HTTP_CREATED);
+        }
+
+        return array(
+            'form' => $form
+        );
+    }
+
+    /**
+     * Edit an sku from the submitted data.
+     *
+     * @ApiDoc(
+     *   section = "Sku",
+     *   resource = true,
+     *   resourceDescription="Edit an sku.",
+     *   input = "Meup\Bundle\ApiBundle\Form\Type\SkuType",
+     *   statusCodes = {
+     *     201 = "Returned when successful",
+     *     400 = "Returned when the form has errors"
+     *   }
+     * )
+     *
+     * @param string  $sku
+     * @param Request $request the request object
+     *
+     * @return FormInterface|View
+     */
+    public function putSkuAction($sku, Request $request)
+    {
+        $manager = $this->getSkuManager();
+
+        if (empty($sku)) {
+            throw new BadRequestHttpException("Request parameters values does not match requirements.");
+        }
+        if (null === $sku = $manager->getByCode($sku)) {
+            throw $this->createNotFoundException("Sku does not exist.");
+        }
+
+        $form = $this->createForm('sku', $sku, array('method' => 'PUT'));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
             $manager->persist($sku);
 
             return new View($sku, Codes::HTTP_CREATED);

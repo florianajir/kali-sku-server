@@ -1,6 +1,9 @@
-meup_ui:
-    resource: "@MeupUIBundle/Resources/config/routing.yml"
-    prefix:   /
+home:
+    pattern: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /doc
+        permanent: true
 
 meup_api:
     resource: "@MeupApiBundle/Resources/config/routing.yml"

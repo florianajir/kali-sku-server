@@ -1,7 +1,7 @@
 ```
 <VirtualHost *:443>
 
-  ServerName api.1001pharmacies.com
+  ServerName kali.1001pharmacies.com
   RequestHeader set X-Forwarded-Proto "https"
 
   SSLEngine On
@@ -22,12 +22,12 @@
   ## Load additional static includes
 
   ## Logging
-  ErrorLog "/var/log/apache2/api.1001pharmacies.com_error.log"
+  ErrorLog "/var/log/apache2/kali.1001pharmacies.com_error.log"
   ServerSignature Off
-  CustomLog "/var/log/apache2/api.1001pharmacies.com_access.log" combined
+  CustomLog "/var/log/apache2/kali.1001pharmacies.com_access.log" combined
 
   ## Server aliases
-  ServerAlias www.api.1001pharmacies.com
+  ServerAlias www.kali.1001pharmacies.com
 
   ## SetEnv/SetEnvIf for environment variables (`local` for dev)
   SetEnv TP_ENV local

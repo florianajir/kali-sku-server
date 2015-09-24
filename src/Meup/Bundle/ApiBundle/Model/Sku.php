@@ -4,7 +4,7 @@ namespace Meup\Bundle\ApiBundle\Model;
 /**
  * @author  c. Boissieux <christophe@1001pharmacies.com>
  */
-class Sku implements SkuInterface
+abstract class Sku implements SkuInterface
 {
     /**
      * @var string
@@ -120,10 +120,4 @@ class Sku implements SkuInterface
 
         return $this;
     }
-
-    /**
-     * @return bool
-     */
-    public function isActive()
-    {}
 }
