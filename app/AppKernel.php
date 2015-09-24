@@ -27,7 +27,6 @@ class AppKernel extends Kernel
             new Bazinga\Bundle\RestExtraBundle\BazingaRestExtraBundle(),
             new Meup\Bundle\BifrostBundle\MeupBifrostBundle(),
             new Meup\Bundle\ApiBundle\MeupApiBundle(),
-            new Meup\Bundle\UIBundle\MeupUIBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
