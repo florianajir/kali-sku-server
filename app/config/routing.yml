@@ -5,10 +5,6 @@ home:
         path: /doc
         permanent: true
 
-meup_ui:
-    resource: "@MeupUIBundle/Resources/config/routing.yml"
-    prefix:   /
-
 meup_api:
     resource: "@MeupApiBundle/Resources/config/routing.yml"
     prefix:   /api
