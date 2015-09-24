@@ -32,8 +32,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *
  * @author Florian AJIR <florian@1001pharmacies.com>
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
- *
- * @codeCoverageIgnore
  */
 class SkuController extends FOSRestController
 {
