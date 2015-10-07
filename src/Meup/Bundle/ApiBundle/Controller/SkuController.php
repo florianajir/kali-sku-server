@@ -78,6 +78,7 @@ class SkuController extends FOSRestController
      *   output = "Meup\Bundle\ApiBundle\Entity\Sku",
      *   statusCodes = {
      *     200 = "Returned when successful",
+     *     401 = "You are not authenticated",
      *     404 = "Returned when not found",
      *     410 = "Returned when deleted"
      *   }
@@ -124,10 +125,10 @@ class SkuController extends FOSRestController
      *   resourceDescription="Create a new sku.",
      *   input = "Meup\Bundle\ApiBundle\Form\Type\SkuType",
      *   statusCodes = {
-     *     200 = "Returned when existing sku found",
+     *     200 = "Returned when existing entity found",
      *     201 = "Returned when successful",
-     *     401 = "You are not authenticated",
-     *     400 = "Returned when the form has errors"
+     *     400 = "Returned when the form has errors",
+     *     401 = "You are not authenticated"
      *   }
      * )
      *
@@ -168,7 +169,7 @@ class SkuController extends FOSRestController
     }
 
     /**
-     * Edit an sku from the submitted data.
+     * Edit an existing sku from the submitted data.
      *
      * @ApiDoc(
      *   section = "Sku",
@@ -176,8 +177,10 @@ class SkuController extends FOSRestController
      *   resourceDescription="Edit an sku.",
      *   input = "Meup\Bundle\ApiBundle\Form\Type\SkuType",
      *   statusCodes = {
-     *     201 = "Returned when successful",
-     *     400 = "Returned when the form has errors"
+     *     200 = "Returned when successful",
+     *     400 = "Returned when the form has errors",
+     *     401 = "You are not authenticated",
+     *     404 = "Returned when not found"
      *   }
      * )
      *
@@ -203,7 +206,7 @@ class SkuController extends FOSRestController
         if ($form->isValid()) {
             $manager->persist($sku);
 
-            return new View($sku, Codes::HTTP_CREATED);
+            return new View($sku, Codes::HTTP_OK);
         }
 
         return array(
@@ -219,7 +222,7 @@ class SkuController extends FOSRestController
      *   resource = true,
      *   resourceDescription="Delete an existing sku.",
      *   statusCodes={
-     *     204 = "Returned when successful",
+     *     200 = "Returned when successful",
      *     400 = "Returned when sku parameter is missing",
      *     401 = "You are not authenticated",
      *     404 = "Returned when the sku is not found"
@@ -250,7 +253,7 @@ class SkuController extends FOSRestController
         }
         $this->getSkuManager()->delete($sku);
 
-        return new View($sku, Codes::HTTP_NO_CONTENT);
+        return new View($sku, Codes::HTTP_OK);
     }
 
     /**
@@ -262,6 +265,7 @@ class SkuController extends FOSRestController
      *   resourceDescription="Allocate a new sku.",
      *   statusCodes = {
      *     201 = "Returned when successful",
+     *     400 = "Returned when project parameter is missing",
      *     401 = "You are not authenticated"
      *   }
      * )
@@ -279,6 +283,9 @@ class SkuController extends FOSRestController
      */
     public function allocateSkuAction($project)
     {
+        if (empty($project)) {
+            throw new BadRequestHttpException("Request parameters values does not match requirements.");
+        }
         $sku = $this->getSkuAllocator()->allocate($project);
 
         return new View($sku, Codes::HTTP_CREATED);

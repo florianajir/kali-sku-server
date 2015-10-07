@@ -32,11 +32,13 @@ class SkuType extends AbstractType
         ));
         $builder->add('type', 'text', array(
             'label' => 'Type of the entity to be skued',
-            'property_path' => 'foreignType'
+            'property_path' => 'foreignType',
+            'required'    => false,
         ));
         $builder->add('id', 'text', array(
             'label' => 'Id of the entity to be skued',
-            'property_path' => 'foreignId'
+            'property_path' => 'foreignId',
+            'required'    => false,
         ));
         $builder->add('permalink', 'text', array(
             'label' => 'Permanent link of the entity.',
