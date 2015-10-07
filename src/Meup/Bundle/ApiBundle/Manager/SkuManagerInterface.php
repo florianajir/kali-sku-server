@@ -10,7 +10,6 @@ use Meup\Bundle\ApiBundle\Model\SkuInterface;
  */
 interface SkuManagerInterface
 {
-
     /**
      * find a unique sku by it's attributes
      *
@@ -38,7 +37,7 @@ interface SkuManagerInterface
      *
      * @return SkuInterface
      */
-    public function getByCode($skuCode);
+    public function findByCode($skuCode);
 
     /**
      * @param SkuInterface $sku

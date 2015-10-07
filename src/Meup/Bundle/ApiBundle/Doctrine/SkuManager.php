@@ -87,7 +87,7 @@ class SkuManager extends BaseManager
     /**
      * {@inheritdoc}
      */
-    public function getByCode($skuCode)
+    public function findByCode($skuCode)
     {
         $sku = $this
             ->repository

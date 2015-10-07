@@ -110,7 +110,7 @@ class SkuManagerTest extends DoctrineTestCase
         $om = $this->getObjectManagerMock($repository, 'Meup\Bundle\ApiBundle\Entity\Sku');
         $manager = new SkuManager($om, 'Meup\Bundle\ApiBundle\Entity\Sku');
 
-        $sku = $manager->getByCode('skuCode');
+        $sku = $manager->findByCode('skuCode');
 
         $this->assertInstanceOf('Meup\Bundle\ApiBundle\Entity\Sku', $sku);
     }
