@@ -267,10 +267,10 @@ class SkuController extends FOSRestController
      * )
      *
      * @Rest\QueryParam(
-     *      name="sku",
+     *      name="project",
      *      nullable=false,
      *      strict=true,
-     *      description="Sku code"
+     *      description="Client application name"
      * )
      *
      * @param string $project
