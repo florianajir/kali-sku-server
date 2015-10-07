@@ -13,14 +13,14 @@ Meup\Bundle\ApiBundle\Entity\Sku:
             unique: true
         project:
             type: string
-            nullable: false
+            nullable: true
         foreignType:
             type: string
-            nullable: false
+            nullable: true
             column: foreign_type
         foreignId:
             type: string
-            nullable: false
+            nullable: true
             column: foreign_id
         createdAt:
             type: datetime

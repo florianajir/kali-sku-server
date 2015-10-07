@@ -14,6 +14,13 @@ meup_api_post_sku:
     requirements:
         _method: POST
 
+# allocate a new sku
+meup_api_allocate_sku:
+    pattern: /{project}
+    defaults: { _controller: MeupApiBundle:Sku:allocateSku, _format: json }
+    requirements:
+        _method: POST
+
 # edit an sku
 meup_api_edit_sku:
     pattern: /{sku}.{_format}

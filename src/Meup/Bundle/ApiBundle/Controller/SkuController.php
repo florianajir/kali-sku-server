@@ -17,6 +17,7 @@ use FOS\RestBundle\View\View;
 
 use Meup\Bundle\ApiBundle\Factory\SkuFactory;
 use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;
+use Meup\Bundle\ApiBundle\Service\SkuAllocatorInterface;
 use Meup\Bundle\ApiBundle\Service\SkuCodeGeneratorInterface;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -60,6 +61,14 @@ class SkuController extends FOSRestController
     }
 
     /**
+     * @return SkuAllocatorInterface
+     */
+    private function getSkuAllocator()
+    {
+        return $this->get('meup_kali.sku_allocator');
+    }
+
+    /**
      * Get a sku.
      *
      * @ApiDoc(
@@ -94,7 +103,7 @@ class SkuController extends FOSRestController
         if (empty($sku)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
-        if (null === $sku = $this->getSkuManager()->getByCode($sku)) {
+        if (null === $sku = $this->getSkuManager()->findByCode($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
         if (false === $sku->isActive()) {
@@ -117,6 +126,7 @@ class SkuController extends FOSRestController
      *   statusCodes = {
      *     200 = "Returned when existing sku found",
      *     201 = "Returned when successful",
+     *     401 = "You are not authenticated",
      *     400 = "Returned when the form has errors"
      *   }
      * )
@@ -183,7 +193,7 @@ class SkuController extends FOSRestController
         if (empty($sku)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
-        if (null === $sku = $manager->getByCode($sku)) {
+        if (null === $sku = $manager->findByCode($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
 
@@ -211,6 +221,7 @@ class SkuController extends FOSRestController
      *   statusCodes={
      *     204 = "Returned when successful",
      *     400 = "Returned when sku parameter is missing",
+     *     401 = "You are not authenticated",
      *     404 = "Returned when the sku is not found"
      *   }
      * )
@@ -234,11 +245,42 @@ class SkuController extends FOSRestController
         if (empty($sku)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
-        if (null === $sku = $this->getSkuManager()->getByCode($sku)) {
+        if (null === $sku = $this->getSkuManager()->findByCode($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
         $this->getSkuManager()->delete($sku);
 
         return new View($sku, Codes::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Generate and allocate a new sku code in registry.
+     *
+     * @ApiDoc(
+     *   section = "Sku",
+     *   resource = true,
+     *   resourceDescription="Allocate a new sku.",
+     *   statusCodes = {
+     *     201 = "Returned when successful",
+     *     401 = "You are not authenticated"
+     *   }
+     * )
+     *
+     * @Rest\QueryParam(
+     *      name="sku",
+     *      nullable=false,
+     *      strict=true,
+     *      description="Sku code"
+     * )
+     *
+     * @param string $project
+     *
+     * @return View
+     */
+    public function allocateSkuAction($project)
+    {
+        $sku = $this->getSkuAllocator()->allocate($project);
+
+        return new View($sku, Codes::HTTP_CREATED);
     }
 }
