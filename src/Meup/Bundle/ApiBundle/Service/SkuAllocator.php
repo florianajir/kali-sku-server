@@ -46,7 +46,7 @@ class SkuAllocator implements SkuAllocatorInterface
      *
      * @return SkuInterface
      */
-    public function allocate($project = null)
+    public function allocate($project)
     {
         $sku = $this->skuFactory->create();
         $sku->setProject($project);

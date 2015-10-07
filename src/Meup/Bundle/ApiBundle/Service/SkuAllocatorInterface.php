@@ -17,5 +17,5 @@ interface SkuAllocatorInterface
      *
      * @return SkuInterface
      */
-    public function allocate($project = null);
+    public function allocate($project);
 }

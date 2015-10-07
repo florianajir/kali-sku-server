@@ -13,7 +13,7 @@ Meup\Bundle\ApiBundle\Entity\Sku:
             unique: true
         project:
             type: string
-            nullable: true
+            nullable: false
         foreignType:
             type: string
             nullable: true
