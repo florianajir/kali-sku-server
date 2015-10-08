@@ -115,7 +115,7 @@ class SkuManager extends BaseManager
     /**
      * {@inheritdoc}
      */
-    public function desactivate(SkuInterface $sku, $andFlush = true)
+    public function disable(SkuInterface $sku, $andFlush = true)
     {
         if ($sku instanceof SkuEntity) {
             $sku->setDeletedAt(new DateTime());

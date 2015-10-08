@@ -177,7 +177,7 @@ class SkuManagerTest extends DoctrineTestCase
         $this->assertTrue($sku->isActive());
     }
 
-    public function testDesactivateSku()
+    public function testDisableSku()
     {
         $sku = new Sku();
         $repository = $this->getObjectRepositoryMock();
@@ -192,13 +192,13 @@ class SkuManagerTest extends DoctrineTestCase
             ->method('flush')
         ;
         $manager = new SkuManager($om, 'Meup\Bundle\ApiBundle\Entity\Sku');
-        $result = $manager->desactivate($sku);
+        $result = $manager->disable($sku);
         $this->assertNotEmpty($sku->getDeletedAt());
         $this->assertFalse($sku->isActive());
         $this->assertInstanceOf('Meup\Bundle\ApiBundle\Entity\Sku', $result);
     }
 
-    public function testDesactivateWithoutFlush()
+    public function testDisableWithoutFlush()
     {
         $sku = new Sku();
         $repository = $this->getObjectRepositoryMock();
@@ -213,7 +213,7 @@ class SkuManagerTest extends DoctrineTestCase
             ->method('flush')
         ;
         $manager = new SkuManager($om, 'Meup\Bundle\ApiBundle\Entity\Sku');
-        $result = $manager->desactivate($sku, false);
+        $result = $manager->disable($sku, false);
         $this->assertNotEmpty($sku->getDeletedAt());
         $this->assertFalse($sku->isActive());
         $this->assertInstanceOf('Meup\Bundle\ApiBundle\Entity\Sku', $result);

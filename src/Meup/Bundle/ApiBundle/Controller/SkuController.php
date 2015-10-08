@@ -257,12 +257,12 @@ class SkuController extends FOSRestController
     }
 
     /**
-     * Desactivates a sku.
+     * Disables a sku.
      *
      * @ApiDoc(
      *   section = "Sku",
      *   resource = true,
-     *   resourceDescription="Desactivate an existing sku.",
+     *   resourceDescription="Disable an existing sku.",
      *   statusCodes={
      *     200 = "Returned when successful",
      *     400 = "Returned when sku parameter is missing",
@@ -285,7 +285,7 @@ class SkuController extends FOSRestController
      * @throws BadRequestHttpException when sku code is missing
      * @throws NotFoundHttpException when sku code not exist
      */
-    public function desactivateSkuAction($sku)
+    public function disableSkuAction($sku)
     {
         if (empty($sku)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
@@ -293,7 +293,7 @@ class SkuController extends FOSRestController
         if (null === $sku = $this->getSkuManager()->findByCode($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
-        $this->getSkuManager()->desactivate($sku);
+        $this->getSkuManager()->disable($sku);
 
         return new View($sku, Codes::HTTP_OK);
     }
