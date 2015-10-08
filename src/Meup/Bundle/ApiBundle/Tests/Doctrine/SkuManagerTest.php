@@ -11,6 +11,7 @@
 namespace Meup\Bundle\ApiBundle\Tests\Doctrine;
 
 use Meup\Bundle\ApiBundle\Doctrine\SkuManager;
+use Meup\Bundle\ApiBundle\Entity\Sku;
 use Meup\Bundle\ApiBundle\Model\SkuInterface;
 use Meup\Bundle\ApiBundle\Tests\DoctrineTestCase;
 
@@ -18,6 +19,7 @@ use Meup\Bundle\ApiBundle\Tests\DoctrineTestCase;
  * Class SkuManagerTest
  *
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
+ * @author Florian Ajir <florian@1001pharmacies.com>
  */
 class SkuManagerTest extends DoctrineTestCase
 {
@@ -117,60 +119,104 @@ class SkuManagerTest extends DoctrineTestCase
 
     public function testPersistSku()
     {
-        $sku = $this->getSkuModelMock();
+        $sku = new Sku();
         $repository = $this->getObjectRepositoryMock();
         $om         = $this->getObjectManagerMock($repository, 'Meup\Bundle\ApiBundle\Entity\Sku');
         $om
             ->expects($this->once())
             ->method('flush')
         ;
-        $manager    = new SkuManager($om, 'Meup\Bundle\ApiBundle\Entity\Sku');
-        $manager->persist($sku, true);
+        $manager = new SkuManager($om, 'Meup\Bundle\ApiBundle\Entity\Sku');
+        $result = $manager->persist($sku);
+        $this->assertInstanceOf('Meup\Bundle\ApiBundle\Entity\Sku', $result);
     }
 
     public function testPersistSkuWithoutFlushingData()
     {
-        $sku = $this->getSkuModelMock();
+        $sku = new Sku();
         $repository = $this->getObjectRepositoryMock();
         $om         = $this->getObjectManagerMock($repository, 'Meup\Bundle\ApiBundle\Entity\Sku');
+        $om
+            ->expects($this->never())
+            ->method('flush')
+        ;
         $manager    = new SkuManager($om, 'Meup\Bundle\ApiBundle\Entity\Sku');
         $manager->persist($sku, false);
     }
 
     public function testDeleteSku()
     {
-        $sku = $this->getSkuModelMock();
-        $sku
-            ->expects($this->any())
-            ->method('isActive')
-            ->willReturn(false)
-        ;
+        $sku = new Sku();
         $repository = $this->getObjectRepositoryMock();
         $om         = $this->getObjectManagerMock($repository, 'Meup\Bundle\ApiBundle\Entity\Sku');
+        $om
+            ->expects($this->once())
+            ->method('remove')
+            ->with($sku)
+        ;
         $om
             ->expects($this->once())
             ->method('flush')
         ;
         $manager    = new SkuManager($om, 'Meup\Bundle\ApiBundle\Entity\Sku');
-        $updatedSku = $manager->delete($sku, true);
-
-        $this->assertFalse($sku->isActive());
+        $manager->delete($sku);
     }
 
     public function testDeleteSkuWithoutFlushingData()
     {
-        $sku = $this->getSkuModelMock();
-        $sku
-            ->expects($this->any())
-            ->method('isActive')
-            ->willReturn(true)
-        ;
+        $sku = new Sku();
         $repository = $this->getObjectRepositoryMock();
         $om         = $this->getObjectManagerMock($repository, 'Meup\Bundle\ApiBundle\Entity\Sku');
+        $om
+            ->expects($this->never())
+            ->method('flush')
+        ;
         $manager    = new SkuManager($om, 'Meup\Bundle\ApiBundle\Entity\Sku');
-        $updatedSku = $manager->delete($sku, false);
+        $manager->delete($sku, false);
 
         $this->assertTrue($sku->isActive());
+    }
+
+    public function testDesactivateSku()
+    {
+        $sku = new Sku();
+        $repository = $this->getObjectRepositoryMock();
+        $om         = $this->getObjectManagerMock($repository, 'Meup\Bundle\ApiBundle\Entity\Sku');
+        $om
+            ->expects($this->once())
+            ->method('persist')
+            ->with($sku)
+        ;
+        $om
+            ->expects($this->once())
+            ->method('flush')
+        ;
+        $manager = new SkuManager($om, 'Meup\Bundle\ApiBundle\Entity\Sku');
+        $result = $manager->desactivate($sku);
+        $this->assertNotEmpty($sku->getDeletedAt());
+        $this->assertFalse($sku->isActive());
+        $this->assertInstanceOf('Meup\Bundle\ApiBundle\Entity\Sku', $result);
+    }
+
+    public function testDesactivateWithoutFlush()
+    {
+        $sku = new Sku();
+        $repository = $this->getObjectRepositoryMock();
+        $om         = $this->getObjectManagerMock($repository, 'Meup\Bundle\ApiBundle\Entity\Sku');
+        $om
+            ->expects($this->once())
+            ->method('persist')
+            ->with($sku)
+        ;
+        $om
+            ->expects($this->never())
+            ->method('flush')
+        ;
+        $manager = new SkuManager($om, 'Meup\Bundle\ApiBundle\Entity\Sku');
+        $result = $manager->desactivate($sku, false);
+        $this->assertNotEmpty($sku->getDeletedAt());
+        $this->assertFalse($sku->isActive());
+        $this->assertInstanceOf('Meup\Bundle\ApiBundle\Entity\Sku', $result);
     }
 
     /**

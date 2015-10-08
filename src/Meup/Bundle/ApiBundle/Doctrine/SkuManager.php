@@ -106,6 +106,17 @@ class SkuManager extends BaseManager
      */
     public function delete(SkuInterface $sku, $andFlush = true)
     {
+        $this->om->remove($sku);
+        if ($andFlush) {
+            $this->om->flush();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function desactivate(SkuInterface $sku, $andFlush = true)
+    {
         if ($sku instanceof SkuEntity) {
             $sku->setDeletedAt(new DateTime());
         }

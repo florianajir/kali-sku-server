@@ -52,8 +52,16 @@ interface SkuManagerInterface
      *
      * @param SkuInterface $sku
      * @param bool         $andFlush
+     */
+    public function delete(SkuInterface $sku, $andFlush = true);
+
+    /**
+     * Desactivate a sku
+     *
+     * @param SkuInterface $sku
+     * @param bool         $andFlush
      *
      * @return SkuInterface
      */
-    public function delete(SkuInterface $sku, $andFlush = true);
+    public function desactivate(SkuInterface $sku, $andFlush = true);
 }

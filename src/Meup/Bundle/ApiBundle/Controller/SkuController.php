@@ -215,14 +215,14 @@ class SkuController extends FOSRestController
     }
 
     /**
-     * Removes a sku.
+     * Deletes a sku from registry.
      *
      * @ApiDoc(
      *   section = "Sku",
      *   resource = true,
      *   resourceDescription="Delete an existing sku.",
      *   statusCodes={
-     *     200 = "Returned when successful",
+     *     204 = "Returned when successful",
      *     400 = "Returned when sku parameter is missing",
      *     401 = "You are not authenticated",
      *     404 = "Returned when the sku is not found"
@@ -252,6 +252,48 @@ class SkuController extends FOSRestController
             throw $this->createNotFoundException("Sku does not exist.");
         }
         $this->getSkuManager()->delete($sku);
+
+        return new View(null, Codes::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Desactivates a sku.
+     *
+     * @ApiDoc(
+     *   section = "Sku",
+     *   resource = true,
+     *   resourceDescription="Desactivate an existing sku.",
+     *   statusCodes={
+     *     200 = "Returned when successful",
+     *     400 = "Returned when sku parameter is missing",
+     *     401 = "You are not authenticated",
+     *     404 = "Returned when the sku is not found"
+     *   }
+     * )
+     *
+     * @Rest\QueryParam(
+     *      name="sku",
+     *      nullable=false,
+     *      strict=true,
+     *      description="Sku code"
+     * )
+     *
+     * @param string $sku
+     *
+     * @return View
+     *
+     * @throws BadRequestHttpException when sku code is missing
+     * @throws NotFoundHttpException when sku code not exist
+     */
+    public function desactivateSkuAction($sku)
+    {
+        if (empty($sku)) {
+            throw new BadRequestHttpException("Request parameters values does not match requirements.");
+        }
+        if (null === $sku = $this->getSkuManager()->findByCode($sku)) {
+            throw $this->createNotFoundException("Sku does not exist.");
+        }
+        $this->getSkuManager()->desactivate($sku);
 
         return new View($sku, Codes::HTTP_OK);
     }
