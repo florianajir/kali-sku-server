@@ -43,5 +43,5 @@ meup_api_desactivate_sku:
     pattern: /desactivate/{sku}
     defaults: { _controller: MeupApiBundle:Sku:desactivateSku }
     requirements:
-        _method: POST
+        _method: PUT
         sku:     "[\d\w]*"
