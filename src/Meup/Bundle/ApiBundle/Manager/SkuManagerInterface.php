@@ -10,7 +10,6 @@ use Meup\Bundle\ApiBundle\Model\SkuInterface;
  */
 interface SkuManagerInterface
 {
-
     /**
      * find a unique sku by it's attributes
      *
@@ -38,7 +37,7 @@ interface SkuManagerInterface
      *
      * @return SkuInterface
      */
-    public function getByCode($skuCode);
+    public function findByCode($skuCode);
 
     /**
      * @param SkuInterface $sku
@@ -53,8 +52,16 @@ interface SkuManagerInterface
      *
      * @param SkuInterface $sku
      * @param bool         $andFlush
+     */
+    public function delete(SkuInterface $sku, $andFlush = true);
+
+    /**
+     * Disable a sku
+     *
+     * @param SkuInterface $sku
+     * @param bool         $andFlush
      *
      * @return SkuInterface
      */
-    public function delete(SkuInterface $sku, $andFlush = true);
+    public function disable(SkuInterface $sku, $andFlush = true);
 }

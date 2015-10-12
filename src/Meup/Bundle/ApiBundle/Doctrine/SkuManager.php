@@ -87,7 +87,7 @@ class SkuManager extends BaseManager
     /**
      * {@inheritdoc}
      */
-    public function getByCode($skuCode)
+    public function findByCode($skuCode)
     {
         $sku = $this
             ->repository
@@ -105,6 +105,17 @@ class SkuManager extends BaseManager
      * {@inheritdoc}
      */
     public function delete(SkuInterface $sku, $andFlush = true)
+    {
+        $this->om->remove($sku);
+        if ($andFlush) {
+            $this->om->flush();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function disable(SkuInterface $sku, $andFlush = true)
     {
         if ($sku instanceof SkuEntity) {
             $sku->setDeletedAt(new DateTime());

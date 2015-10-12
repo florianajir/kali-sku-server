@@ -3,6 +3,7 @@ parameters:
     meup_kali.sku_entity.class:    Meup\Bundle\ApiBundle\Entity\Sku
     meup_kali.sku_factory.class:   Meup\Bundle\ApiBundle\Factory\SkuFactory
     meup_kali.sku_generator.class: Meup\Bundle\ApiBundle\Service\SkuCodeGenerator
+    meup_kali.sku_allocator.class: Meup\Bundle\ApiBundle\Service\SkuAllocator
     meup_kali.sku_form_type.class: Meup\Bundle\ApiBundle\Form\Type\SkuType
 
 services:
@@ -22,6 +23,13 @@ services:
         arguments:
             - %default_sku_code_length%
             - %default_sku_code_alphabet%
+
+    meup_kali.sku_allocator:
+        class: %meup_kali.sku_allocator.class%
+        arguments:
+            - @meup_kali.sku_factory
+            - @meup_kali.sku_manager
+            - @meup_kali.sku_generator
 
     meup_kali.sku_form_type:
         class: %meup_kali.sku_form_type.class%
