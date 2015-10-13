@@ -184,15 +184,14 @@ class SkuController extends FOSRestController
      *   }
      * )
      *
-     * @param string  $sku
      * @param Request $request the request object
+     * @param string  $sku
      *
      * @return FormInterface|View
      */
-    public function putSkuAction($sku, Request $request)
+    public function putSkuAction(Request $request, $sku)
     {
         $manager = $this->getSkuManager();
-
         if (empty($sku)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
