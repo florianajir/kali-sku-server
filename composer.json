@@ -1,9 +1,13 @@
 {
-    "name": "1001pharmacies/symfony-bifrost-edition",
+    "name": "1001pharmacies/kali-server",
     "license": "MIT",
     "type": "project",
-    "description": "The 1001Pharmacies \"Symfony REST Edition\" distribution",
+    "description": "The 1001Pharmacies SKU registry API",
     "authors": [
+        {
+            "name":  "Florian Ajir",
+            "email": "florian@1001pharmacies.com"
+        },
         {
             "name":  "Loïc Ambrosini",
             "email": "loic@1001pharmacies.com"
@@ -12,7 +16,7 @@
     "repositories": [
         {
             "type":"git",
-            "url": "https://github.com/1001Pharmacies/bifrost-bundle.git"
+            "url": "https://github.com/1001Pharmacies/kali-server.git"
         }
     ],
     "autoload": {
@@ -25,8 +29,8 @@
         "doctrine/orm": "~2.2,>=2.2.3,<2.5",
         "doctrine/dbal": "<2.5",
         "doctrine/doctrine-bundle": "~1.4",
-        "doctrine/migrations": "1.0.*@dev",
-        "doctrine/doctrine-migrations-bundle": "1.0.*",
+        "doctrine/migrations": "1.1.*",
+        "doctrine/doctrine-migrations-bundle": "1.1.*",
         "twig/extensions": "1.0.*",
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
