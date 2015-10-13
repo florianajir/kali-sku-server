@@ -1,7 +1,7 @@
 # get sku details
 meup_api_get_sku:
-    pattern: /{sku}.{_format}
-    defaults: { _controller: MeupApiBundle:Sku:getSku, _format: json }
+    pattern: /{sku}
+    defaults: { _controller: MeupApiBundle:Sku:getSku }
     requirements:
         _method: GET
         sku:     "[\d\w]*"
@@ -10,25 +10,24 @@ meup_api_get_sku:
 # create a new sku
 meup_api_post_sku:
     pattern: /
-    defaults: { _controller: MeupApiBundle:Sku:postSku, _format: json }
+    defaults: { _controller: MeupApiBundle:Sku:postSku }
     requirements:
         _method: POST
 
 # allocate a new sku
 meup_api_allocate_sku:
     pattern: /{project}
-    defaults: { _controller: MeupApiBundle:Sku:allocateSku, _format: json }
+    defaults: { _controller: MeupApiBundle:Sku:allocateSku }
     requirements:
         _method: POST
 
 # edit an sku
 meup_api_edit_sku:
-    pattern: /{sku}.{_format}
-    defaults: { _controller: MeupApiBundle:Sku:putSku, _format: json }
+    pattern: /{sku}
+    defaults: { _controller: MeupApiBundle:Sku:putSku }
     requirements:
         _method: PUT
         sku:     "[\d\w]*"
-        _format: json
 
 # delete sku
 meup_api_delete_sku:
