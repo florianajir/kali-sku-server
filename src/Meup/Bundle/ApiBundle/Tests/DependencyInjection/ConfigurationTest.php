@@ -18,6 +18,7 @@ use Meup\Bundle\ApiBundle\DependencyInjection\Configuration;
  * Class ConfigurationTest
  *
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
+ * @author Florian AJIR <florian@1001pharmacies.com>
  */
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
@@ -43,9 +44,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     private function getContainer()
     {
-        $container = new ContainerBuilder();
-
-        return $container;
+        return new ContainerBuilder();
     }
     /**
      *
@@ -59,7 +58,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function testGetConfigWithDefaultValues()
     {
-        $this->extension->load(array(), $container = $this->getContainer());
+        $this->extension->load(array(), $this->getContainer());
     }
 
     public function testGetConfigurationTree()

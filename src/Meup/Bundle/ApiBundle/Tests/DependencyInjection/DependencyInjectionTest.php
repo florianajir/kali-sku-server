@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * Class MeupApiExtensionTest
  *
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
+ * @author Florian AJIR <florian@1001pharmacies.com>
  */
 class MeupApiExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,16 +39,6 @@ class MeupApiExtensionTest extends \PHPUnit_Framework_TestCase
     protected function getExtension()
     {
         return new MeupApiExtension();
-    }
-
-    /**
-     * @return ContainerBuilder
-     */
-    private function getContainer()
-    {
-        $container = new ContainerBuilder();
-
-        return $container;
     }
 
     public function setUp()
