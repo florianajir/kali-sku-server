@@ -32,8 +32,11 @@ class SkuAllocator implements SkuAllocatorInterface
      * @param SkuManagerInterface $skuManager
      * @param SkuCodeGeneratorInterface $skuCodeGenerator
      */
-    public function __construct(SkuFactory $skuFactory, SkuManagerInterface $skuManager, SkuCodeGeneratorInterface $skuCodeGenerator)
-    {
+    public function __construct(
+        SkuFactory $skuFactory,
+        SkuManagerInterface $skuManager,
+        SkuCodeGeneratorInterface $skuCodeGenerator
+    ) {
         $this->skuFactory = $skuFactory;
         $this->skuManager = $skuManager;
         $this->skuCodeGenerator = $skuCodeGenerator;

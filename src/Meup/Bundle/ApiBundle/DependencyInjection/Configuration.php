@@ -9,6 +9,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  * Class Configuration
  *
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
+ * @author Florian AJIR <florian@1001pharmacies.com>
  */
 class Configuration implements ConfigurationInterface
 {
@@ -18,7 +19,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('meup_api');
+        $treeBuilder->root('meup_api');
 
         return $treeBuilder;
     }
