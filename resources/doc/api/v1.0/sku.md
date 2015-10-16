@@ -39,6 +39,30 @@ sku[permalink]:
   * required: false
   * description: Permanent link of the entity.
 
+## /api/{project} ##
+
+### `POST` /api/{project} ###
+
+_Create a new sku record without details and return code allocated._
+
+#### Parameters ####
+
+sku:
+
+  * type: object (SkuType)
+  * required: true
+
+sku[project]:
+
+  * type: string
+  * required: true
+  * description: Name of the application
+
+#### Response ####
+
+code:
+
+  * type: string
 
 ## /api/{sku} ##
 
@@ -53,7 +77,7 @@ _Removes a sku._
   - Description: Sku code
 
 
-### `GET` /api/{sku}.{_format} ###
+### `GET` /api/{sku} ###
 
 _Get a sku._
 
@@ -63,21 +87,9 @@ _Get a sku._
 
   - Description: Sku code
   
-**_format**
-
-  - Requirement: json
-
 #### Response ####
 
 project:
-
-  * type: string
-
-foreignType:
-
-  * type: string
-
-foreignId:
 
   * type: string
 
@@ -110,7 +122,7 @@ permalink:
   * type: string
 
 
-### `PUT` /api/{sku}.{_format} ###
+### `PUT` /api/{sku} ###
 
 _Edit an sku from the submitted data._
 
@@ -120,10 +132,6 @@ _Edit an sku from the submitted data._
 
   - Requirement: [\d\w]*
   - Type: string
-
-**_format**
-
-  - Requirement: json
 
 #### Parameters ####
 
