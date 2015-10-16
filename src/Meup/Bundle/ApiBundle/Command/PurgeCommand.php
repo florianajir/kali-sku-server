@@ -9,7 +9,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class PurgeCommand
  *
- * php app/console meup:kali:purge <project> [<type>]
+ * Delete sku records matching with criteria.
+ * Usage: php app/console meup:kali:purge <project> [<type>]
  *
  * @author Florian AJIR <florian@1001pharmacies.com>
  */

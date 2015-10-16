@@ -1,6 +1,9 @@
 # Kali-Server
 
-Kali-Server provides a RESTful API for centralize sku management between web-applications pool with authentication and versionning.
+Kali-Server provides a RESTful API centralizing SKU allocation and management for web-applications.
+
+- [kali-client](https://github.com/1001Pharmacies/kali-client) The official *Symfony bundle* kali client
+- [API doc](resources/doc/api/v1.0/index.md)
 
 ## Summary
 
@@ -40,6 +43,7 @@ Where possible, API strives to use appropriate HTTP verbs for each action.
 | :------- | :------------------------------------ |
 | GET      | Used for retrieving sku resources.    |
 | POST     | Used for creating sku resources.      |
+| PUT      | Used for updating sku resources.      |
 | DELETE   | Used for deleting sku resources.      |
 
 ## Authentication
