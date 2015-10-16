@@ -4,6 +4,7 @@ Kali-Server provides a RESTful API centralizing SKU allocation and management fo
 
 - [kali-client](https://github.com/1001Pharmacies/kali-client) The official *Symfony bundle* kali client
 - [API doc](resources/doc/api/v1.0/index.md)
+- [Commands](resources/doc/api/v1.0/commands.md)
 
 ## Summary
 
