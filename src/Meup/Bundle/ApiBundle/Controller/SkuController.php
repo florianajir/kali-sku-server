@@ -180,7 +180,8 @@ class SkuController extends FOSRestController
      *     200 = "Returned when successful",
      *     400 = "Returned when the form has errors",
      *     401 = "You are not authenticated",
-     *     404 = "Returned when not found"
+     *     404 = "Returned when not found",
+     *     409 = "Returned if an existing resource is found with submitted values"
      *   }
      * )
      *
@@ -198,11 +199,17 @@ class SkuController extends FOSRestController
         if (null === $sku = $manager->findByCode($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
-
         $form = $this->createForm('sku', $sku, array('method' => 'PUT'));
         $form->handleRequest($request);
-
         if ($form->isValid()) {
+            $existantSku = $manager->findByUniqueGroup(
+                $form->get('project')->getViewData(),
+                $form->get('type')->getViewData(),
+                $form->get('id')->getViewData()
+            );
+            if (false === is_null($existantSku)) {
+                return new View($existantSku, Codes::HTTP_CONFLICT);
+            }
             $manager->persist($sku);
 
             return new View($sku, Codes::HTTP_OK);
