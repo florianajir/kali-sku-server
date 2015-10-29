@@ -40,7 +40,7 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "jms/serializer-bundle": "1.*",
-        "jms/cg": "1.0",
+        "jms/cg": "~1.0",
         "friendsofsymfony/user-bundle": "2.0.*@dev",
         "friendsofsymfony/rest-bundle": "1.4.*",
         "friendsofsymfony/http-cache-bundle": "~1.0",
@@ -57,7 +57,7 @@
         "phpunit/phpunit":              "4.*",
         "squizlabs/php_codesniffer":    "2.*",
         "sebastian/phpcpd":             "2.*",
-        "phpmd/phpmd":                  "2.*",
+        "phpmd/phpmd":                  "~2.3",
         "phing/phing":                  "~2.9",
         "sami/sami":                    "2.0.*"
     },
@@ -67,12 +67,14 @@
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"

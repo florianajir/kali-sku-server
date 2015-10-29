@@ -65,7 +65,7 @@
         <exec command="composer global require 'phpunit/phpunit=4.*'" />
         <exec command="composer global require 'squizlabs/php_codesniffer=1.*'" />
         <exec command="composer global require 'sebastian/phpcpd=2.*'" />
-        <exec command="composer global require 'phpmd/phpmd=@stable'" />
+        <exec command="composer global require 'phpmd/phpmd=2.*'" />
         <exec command="composer global require 'pdepend/pdepend=2.*'" />
         <exec command="composer global require 'halleck45/phpmetrics=^1.3'" />
         <exec command="composer global require 'phploc/phploc=*'" />
@@ -83,6 +83,7 @@
             <fileset dir=".">
                 <include name="src/**/*.php"/>
                 <exclude name="vendor/"/>
+                <exclude name="app/cache/"/>
             </fileset>
         </phplint>
     </target>
@@ -99,6 +100,7 @@
             <fileset dir=".">
                 <include name="src/**/*.php"/>
                 <exclude name="vendor/"/>
+                <exclude name="app/cache/"/>
             </fileset>
         </phplint>
     </target>
@@ -144,6 +146,7 @@
             <fileset dir="./">
                 <include name="src/**/*.php" />
                 <exclude name="vendor/" />
+                <exclude name="app/cache/"/>
             </fileset>
         </phpcodesniffer>
     </target>
@@ -154,31 +157,20 @@
             <fileset dir="./">
                 <include name="src/**/*.php" />
                 <exclude name="vendor/" />
+                <exclude name="app/cache/"/>
             </fileset>
-            <formatter type="checkstyle"
-                       outfile="${builddir}/reports/checkstyle.xml" />
+            <formatter type="checkstyle" outfile="${builddir}/reports/checkstyle.xml" />
         </phpcodesniffer>
     </target>
 
     <target name="phpmd"
             description="Look for several potential problems">
-
-        <phpmd>
-            <fileset dir="src">
-                <include name="**/*.php" />
-                <exclude name="vendor/" />
-            </fileset>
-        </phpmd>
+        <phpmd file="./src"/>
     </target>
 
     <target name="ci:phpmd"
             description="Look for several potential problems">
-
-        <phpmd>
-            <fileset dir="src">
-                <include name="**/*.php" />
-                <exclude name="vendor/" />
-            </fileset>
+        <phpmd file="./src">
             <formatter type="xml" outfile="${builddir}/reports/pmd.xml"/>
         </phpmd>
     </target>
@@ -189,6 +181,7 @@
         <phpcpd>
             <fileset dir=".">
                 <exclude name="vendor/" />
+                <exclude name="app/cache/" />
                 <include name="src/**/*.php" />
             </fileset>
         </phpcpd>
@@ -196,10 +189,10 @@
 
     <target name="ci:phpcpd"
             description="Detects duplicated code and generate report">
-
         <phpcpd>
             <fileset dir=".">
                 <exclude name="vendor/" />
+                <exclude name="app/cache/" />
                 <include name="src/**/*.php" />
             </fileset>
             <formatter type="pmd" outfile="${builddir}/reports/cpd.xml"/>
@@ -213,6 +206,7 @@
             <fileset dir="./">
                 <exclude name="vendor/" />
                 <include name="src/**/*.php" />
+                <exclude name="app/cache/"/>
             </fileset>
             <logger type="jdepend-xml" outfile="${builddir}/reports/pdepend.xml"/>
         </phpdepend>
@@ -247,6 +241,7 @@
                 <include name="src/**/*.php" />
                 <include name="*.php" />
                 <exclude name="vendor/" />
+                <exclude name="app/cache/"/>
             </fileset>
         </phploc>
     </target>
@@ -263,6 +258,7 @@
                 <include name="src/**/*.php" />
                 <include name="*.php" />
                 <exclude name="vendor/" />
+                <exclude name="app/cache/"/>
             </fileset>
         </phploc>
     </target>
