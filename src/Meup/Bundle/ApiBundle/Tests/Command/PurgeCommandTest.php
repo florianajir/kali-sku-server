@@ -22,7 +22,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class PurgeCommandTest extends KernelTestCase
 {
-    protected function testExecute()
+    public function testExecute()
     {
         $kernel = $this->createKernel();
         $kernel->boot();
