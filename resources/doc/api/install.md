@@ -68,7 +68,7 @@ git clone git@github.com:1001Pharmacies/kali-server.git
 + Install vendors 
 
 ```ShellSession
-composer.phar install
+/path/to/composer.phar install
 ```
 
 At this point you will be asked to configure yours parameters (database etc.) 
