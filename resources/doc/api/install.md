@@ -62,7 +62,7 @@ service apache2 restart
 
 ```ShellSession
 cd {project source directory (ex: /var/www/html/)}
-git clone git@github.com:1001Pharmacies/kali-server.git ./
+git clone git@github.com:1001Pharmacies/kali-server.git
 ```
 
 + Install vendors 
@@ -76,7 +76,7 @@ At this point you will be asked to configure yours parameters (database etc.)
 + Create database 
 
 ```ShellSession
-php app/console doctrine:schema:create
+php app/console doctrine:schema:update --force
 ```
 
 **you're done ! enjoy. You can access to API with the following URI : https://kali.1001pharmacies.com or other if you have changed the URI into the VHOST file**
