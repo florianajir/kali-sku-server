@@ -5,6 +5,16 @@ kalidata:
         - /var/www/app/cache
         - /var/www/app/logs
         - /var/log/apache2
+kalidb:
+    container_name: 1001pharmacies-kali-db
+    image: mariadb:10
+    environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_USER=kali
+        - MYSQL_PASSWORD=kali
+        - MYSQL_DATABASE=kali
+    ports:
+        - "23307:3306"
 kalisrc:
     container_name: 1001pharmacies-kali-src
     image: busybox
@@ -15,6 +25,7 @@ kaliweb:
     build: docker/.
     links:
         - kalidata
+        - kalidb
         - kalisrc
     ports:
         - "8083:80"
