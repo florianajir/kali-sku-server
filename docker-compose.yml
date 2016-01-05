@@ -1,0 +1,25 @@
+kalidata:
+    container_name: 1001pharmacies-kali-data
+    image: busybox
+    volumes:
+        - /var/www/app/cache
+        - /var/www/app/logs
+        - /var/log/apache2
+kalisrc:
+    container_name: 1001pharmacies-kali-src
+    image: busybox
+    volumes:
+        - .:/var/www
+kaliweb:
+    container_name: 1001pharmacies-kali-web
+    build: docker/.
+    links:
+        - kalidata
+        - kalisrc
+    ports:
+        - "8083:80"
+    volumes_from:
+        - kalidata
+        - kalisrc
+    environment:
+        - CONTEXT=docker-dev

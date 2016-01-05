@@ -1,6 +1,36 @@
 # Install
-   
-## Install SSL on server 
+
+## Requirements
+
+- PHP 5.3 or later
+- MySQL or MariaDb
+- SSL for https protocol
+- Composer for dependencies installation
+- Phing for grouped actions like testing, building etc.
+
+## Install Via Docker
+
+Install docker on your system.
+
+Launch
+
+```
+docker-compose up -d
+```   
+
+add to your hosts file the following entry :
+
+```
+127.0.0.1 local.kali.1001pharmacies.com    
+```
+
+127.0.0.1 can be replaced with the docker-machine ip if docker toolbox installed.
+
+** you're done ! enjoy. You can access to API with the following URI : https://local.kali.1001pharmacies.com:8083 **
+
+## Install Via Vagrant or local install
+
+### Create SSL certificate
 
 + Be root :
 
@@ -13,7 +43,7 @@ sudo su
 ```ShellSession
 sudo nano /etc/apache2/ports.conf
 ```
-and add line : 
+and add line :
 
 ```
 Listen 443
@@ -37,7 +67,7 @@ a2enmod headers
 
 with theses commands you may see a warning message about the LOCALE. Don't worry it's not a problem.
 
-## Add Virtual Host
+### Configure Virtual Host
 
 Update or create your virtualhost file /etc/apache2/sites-enabled/{yourVhost}.conf (see examples files)
 
@@ -56,7 +86,7 @@ a2ensite {yourVhost}
 service apache2 restart
 ```
 
-## Clone project
+### Clone project
 
 + Clone repository
 
@@ -65,15 +95,15 @@ cd {project source directory (ex: /var/www/html/)}
 git clone git@github.com:1001Pharmacies/kali-server.git ./
 ```
 
-+ Install vendors 
++ Install vendors
 
 ```ShellSession
 composer.phar install
 ```
 
-At this point you will be asked to configure yours parameters (database etc.) 
+At this point you will be asked to configure yours parameters (database etc.)
 
-+ Create database 
++ Create database
 
 ```ShellSession
 php app/console doctrine:schema:create
