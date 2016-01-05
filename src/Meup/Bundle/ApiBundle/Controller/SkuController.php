@@ -81,6 +81,9 @@ class SkuController extends FOSRestController
      *     401 = "You are not authenticated",
      *     404 = "Returned when not found",
      *     410 = "Returned when deleted"
+     *   },
+     *   parsers = {
+     *     "Nelmio\ApiDocBundle\Parser\JmsMetadataParser"
      *   }
      * )
      *

@@ -1,5 +1,4 @@
 <?php
-
 namespace Meup\Bundle\ApiBundle\Entity;
 
 use DateTime;
@@ -9,7 +8,7 @@ use Meup\Bundle\ApiBundle\Model\Sku as SkuModel;
 /**
  * @author  c. Boissieux <christophe@1001pharmacies.com>
  *
- * Sku entity
+ * Sku doctrine entity
  */
 class Sku extends SkuModel
 {
@@ -109,7 +108,7 @@ class Sku extends SkuModel
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isActive()
     {
