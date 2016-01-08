@@ -1,12 +1,19 @@
 <?php
-
+/**
+ * This file is part of the 1001 Pharmacies kali-server
+ *
+ * (c) 1001pharmacies <http://github.com/1001pharmacies/kali-server>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace Meup\Bundle\ApiBundle\Model;
 
 /**
  * provide an interface for Skus
  *
- * @author  c. Boissieux <christophe@1001pharmacies.com>
- *
+ * @author Florian Ajir <florian@1001pharmacies.com>
+ * @author c. Boissieux <christophe@1001pharmacies.com>
  */
 interface SkuInterface
 {
@@ -18,29 +25,11 @@ interface SkuInterface
     public function getCode();
 
     /**
-     * Set code
-     *
-     * @param string $code
-     *
-     * @return self
-     */
-    public function setCode($code);
-
-    /**
      * Get project
      *
      * @return string
      */
     public function getProject();
-
-    /**
-     * Set project
-     *
-     * @param string $project
-     *
-     * @return self
-     */
-    public function setProject($project);
 
     /**
      * Get foreignerType

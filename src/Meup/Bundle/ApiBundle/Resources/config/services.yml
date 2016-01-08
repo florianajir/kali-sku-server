@@ -1,37 +1,40 @@
-parameters:
-    meup_kali.sku_manager:         Meup\Bundle\ApiBundle\Doctrine\SkuManager
-    meup_kali.sku_entity.class:    Meup\Bundle\ApiBundle\Entity\Sku
-    meup_kali.sku_factory.class:   Meup\Bundle\ApiBundle\Factory\SkuFactory
-    meup_kali.sku_generator.class: Meup\Bundle\ApiBundle\Service\SkuCodeGenerator
-    meup_kali.sku_allocator.class: Meup\Bundle\ApiBundle\Service\SkuAllocator
-    meup_kali.sku_form_type.class: Meup\Bundle\ApiBundle\Form\Type\SkuType
-
 services:
-    meup_kali.sku_manager:
-        class: %meup_kali.sku_manager%
-        arguments:
-            - @doctrine.orm.entity_manager
-            - %meup_kali.sku_entity.class%
-
     meup_kali.sku_factory:
-        class: %meup_kali.sku_factory.class%
+        class: Meup\Bundle\ApiBundle\Factory\SkuFactory
         arguments:
-            - %meup_kali.sku_entity.class%
+            - Meup\Bundle\ApiBundle\Entity\Sku
+
+    meup_kali.sku_form_type:
+        class: Meup\Bundle\ApiBundle\Form\Type\SkuType
+        arguments:
+            - @meup_kali.sku_factory
+            - @meup_kali.sku_manager
+        tags:
+            - { name: form.type, alias: sku }
 
     meup_kali.sku_generator:
-        class: %meup_kali.sku_generator.class%
+        class: Meup\Bundle\ApiBundle\Service\CodeGenerator
         arguments:
             - %default_sku_code_length%
             - %default_sku_code_alphabet%
 
-    meup_kali.sku_allocator:
-        class: %meup_kali.sku_allocator.class%
+    meup_kali.sku_manager:
+        class: Meup\Bundle\ApiBundle\Manager\SkuManager
         arguments:
+            - @meup_kali.sku_repository
             - @meup_kali.sku_factory
-            - @meup_kali.sku_manager
             - @meup_kali.sku_generator
 
-    meup_kali.sku_form_type:
-        class: %meup_kali.sku_form_type.class%
+    meup_kali.purge_command:
+        class: Meup\Bundle\ApiBundle\Command\PurgeCommand
         tags:
-            - { name: form.type, alias: sku }
+            -  { name: console.command }
+        arguments:
+            - @meup_kali.sku_manager
+
+    meup_kali.sku_repository:
+        class: Meup\Bundle\ApiBundle\Doctrine\SkuRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - Meup\Bundle\ApiBundle\Entity\Sku

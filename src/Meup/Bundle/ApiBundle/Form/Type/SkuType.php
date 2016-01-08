@@ -10,9 +10,12 @@
 
 namespace Meup\Bundle\ApiBundle\Form\Type;
 
+use Meup\Bundle\ApiBundle\Factory\SkuFactory;
+use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class SkuType
@@ -21,6 +24,26 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class SkuType extends AbstractType
 {
+    /**
+     * @var SkuFactory
+     */
+    private $skuFactory;
+
+    /**
+     * @var SkuManagerInterface
+     */
+    private $skuManager;
+
+    /**
+     * @param SkuFactory $skuFactory
+     * @param SkuManagerInterface $skuManager
+     */
+    public function __construct(SkuFactory $skuFactory, SkuManagerInterface $skuManager)
+    {
+        $this->skuFactory = $skuFactory;
+        $this->skuManager = $skuManager;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -48,15 +71,20 @@ class SkuType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class'         => 'Meup\Bundle\ApiBundle\Entity\Sku',
             'csrf_protection'    => false,
-            'translation_domain' => 'MeupSkuBundle'
+            'translation_domain' => 'MeupSkuBundle',
+            'empty_data' => function (FormInterface $form) {
+                return $this->skuFactory->create(
+                    $this->skuManager->generateUniqueCode(),
+                    $form->get('project')->getData()
+                );
+            }
         ));
     }
-
     /**
      * @return string
      */

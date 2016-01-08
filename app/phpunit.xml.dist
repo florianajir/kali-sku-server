@@ -16,8 +16,6 @@
         <whitelist>
             <directory>../src</directory>
             <exclude>
-                <directory>../src/*/Bundle/*Bundle/Command</directory>
-                <directory>../src/*/Bundle/*Bundle/Controller</directory>
                 <directory>../src/*/Bundle/*Bundle/Resources</directory>
                 <directory>../src/*/Bundle/*Bundle/Tests</directory>
             </exclude>

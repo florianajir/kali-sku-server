@@ -59,7 +59,8 @@
         "sebastian/phpcpd":             "2.*",
         "phpmd/phpmd":                  "~2.3",
         "phing/phing":                  "~2.9",
-        "sami/sami":                    "2.0.*"
+        "sami/sami":                    "2.0.*",
+        "doctrine/doctrine-fixtures-bundle": "^2.3"
     },
     "conflict": {
         "symfony/routing": "2.4.1"

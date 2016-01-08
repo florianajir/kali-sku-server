@@ -1,8 +1,19 @@
 <?php
+/**
+ * This file is part of the 1001 Pharmacies kali-server
+ *
+ * (c) 1001pharmacies <http://github.com/1001pharmacies/kali-server>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace Meup\Bundle\ApiBundle\Model;
 
 /**
- * @author  c. Boissieux <christophe@1001pharmacies.com>
+ * Abstract class Sku Model
+ *
+ * @author Florian Ajir <florian@1001pharmacies.com>
+ * @author c. Boissieux <christophe@1001pharmacies.com>
  */
 abstract class Sku implements SkuInterface
 {
@@ -32,21 +43,21 @@ abstract class Sku implements SkuInterface
     protected $permalink;
 
     /**
-     * {@inheritDoc}
+     * @param string $code
+     * @param string $project
      */
-    public function getCode()
+    public function __construct($code, $project)
     {
-        return $this->code;
+        $this->code = $code;
+        $this->project = $project;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setCode($code)
+    public function getCode()
     {
-        $this->code = $code;
-
-        return $this;
+        return $this->code;
     }
 
     /**
@@ -60,16 +71,6 @@ abstract class Sku implements SkuInterface
     /**
      * {@inheritDoc}
      */
-    public function setProject($project)
-    {
-        $this->project = $project;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getForeignType()
     {
         return $this->foreignType;
@@ -78,7 +79,7 @@ abstract class Sku implements SkuInterface
     /**
      * {@inheritDoc}
      */
-    public function setforeignType($foreignType)
+    public function setForeignType($foreignType)
     {
         $this->foreignType = $foreignType;
 

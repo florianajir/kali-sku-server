@@ -16,9 +16,9 @@ use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
 
 use Meup\Bundle\ApiBundle\Factory\SkuFactory;
+use Meup\Bundle\ApiBundle\Form\Type\SkuType;
 use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;
 use Meup\Bundle\ApiBundle\Service\SkuAllocatorInterface;
-use Meup\Bundle\ApiBundle\Service\SkuCodeGeneratorInterface;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -37,14 +37,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class SkuController extends FOSRestController
 {
     /**
-     * @return SkuCodeGeneratorInterface
-     */
-    private function getSkuCodeGenerator()
-    {
-        return $this->get('meup_kali.sku_generator');
-    }
-
-    /**
      * @return SkuFactory
      */
     private function getSkuFactory()
@@ -58,14 +50,6 @@ class SkuController extends FOSRestController
     private function getSkuManager()
     {
         return $this->get('meup_kali.sku_manager');
-    }
-
-    /**
-     * @return SkuAllocatorInterface
-     */
-    private function getSkuAllocator()
-    {
-        return $this->get('meup_kali.sku_allocator');
     }
 
     /**
@@ -107,7 +91,7 @@ class SkuController extends FOSRestController
         if (empty($sku)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
-        if (null === $sku = $this->getSkuManager()->findByCode($sku)) {
+        if (null === $sku = $this->getSkuManager()->find($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
         if (false === $sku->isActive()) {
@@ -142,12 +126,11 @@ class SkuController extends FOSRestController
     public function postSkuAction(Request $request)
     {
         $manager = $this->getSkuManager();
-        $sku = $this->getSkuFactory()->create();
-        $form = $this->createForm('sku', $sku);
+        $form = $this->createForm(SkuType::class);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $existantSku = $manager->findByUniqueGroup(
+            $existantSku = $manager->findByProjectTypeId(
                 $form->get('project')->getViewData(),
                 $form->get('type')->getViewData(),
                 $form->get('id')->getViewData()
@@ -156,12 +139,9 @@ class SkuController extends FOSRestController
             if (false === is_null($existantSku)) {
                 return new View($existantSku);
             }
-
-            $generator = $this->getSkuCodeGenerator();
-            while ($sku->getCode() === null || $manager->exists($sku->getCode())) {
-                $sku->setCode($generator->generateSkuCode());
-            }
-            $manager->persist($sku);
+            $sku = $form->getData();
+            var_dump($sku);
+            $manager->save($sku);
 
             return new View($sku, Codes::HTTP_CREATED);
         }
@@ -199,13 +179,13 @@ class SkuController extends FOSRestController
         if (empty($sku)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
-        if (null === $sku = $manager->findByCode($sku)) {
+        if (null === $sku = $manager->find($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
-        $form = $this->createForm('sku', $sku, array('method' => 'PUT'));
+        $form = $this->createForm(SkuType::class, $sku, array('method' => 'PUT'));
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $existantSku = $manager->findByUniqueGroup(
+            $existantSku = $manager->findByProjectTypeId(
                 $form->get('project')->getViewData(),
                 $form->get('type')->getViewData(),
                 $form->get('id')->getViewData()
@@ -213,7 +193,7 @@ class SkuController extends FOSRestController
             if (false === is_null($existantSku)) {
                 return new View($existantSku, Codes::HTTP_CONFLICT);
             }
-            $manager->persist($sku);
+            $manager->save($sku);
 
             return new View($sku, Codes::HTTP_OK);
         }
@@ -257,7 +237,7 @@ class SkuController extends FOSRestController
         if (empty($sku)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
-        if (null === $sku = $this->getSkuManager()->findByCode($sku)) {
+        if (null === $sku = $this->getSkuManager()->find($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
         $this->getSkuManager()->delete($sku);
@@ -299,7 +279,7 @@ class SkuController extends FOSRestController
         if (empty($sku)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
-        if (null === $sku = $this->getSkuManager()->findByCode($sku)) {
+        if (null === $sku = $this->getSkuManager()->find($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
         $this->getSkuManager()->disable($sku);
@@ -337,7 +317,7 @@ class SkuController extends FOSRestController
         if (empty($project)) {
             throw new BadRequestHttpException("Request parameters values does not match requirements.");
         }
-        $sku = $this->getSkuAllocator()->allocate($project);
+        $sku = $this->getSkuManager()->allocate($project);
 
         return new View($sku, Codes::HTTP_CREATED);
     }

@@ -1,9 +1,19 @@
 <?php
+/**
+ * This file is part of the 1001 Pharmacies kali-server
+ *
+ * (c) 1001pharmacies <http://github.com/1001pharmacies/kali-server>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace Meup\Bundle\ApiBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Meup\Bundle\ApiBundle\Manager\SkuManager;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -14,8 +24,43 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Florian AJIR <florian@1001pharmacies.com>
  */
-class PurgeCommand extends ContainerAwareCommand
+class PurgeCommand extends Command
 {
+    /**
+     * @var InputInterface
+     */
+    private $input;
+
+    /**
+     * @var OutputInterface
+     */
+    private $output;
+
+    /**
+     * @var SkuManager
+     */
+    private $manager;
+
+    /**
+     * @var int
+     */
+    private $count;
+
+    /**
+     * @var array
+     */
+    private $criteria;
+
+    /**
+     * @param SkuManager $manager
+     */
+    public function __construct(SkuManager $manager)
+    {
+        $this->manager = $manager;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -33,7 +78,14 @@ class PurgeCommand extends ContainerAwareCommand
                 'type',
                 InputArgument::OPTIONAL,
                 'The object type.'
-            );
+            )
+            ->addOption(
+                'force',
+                'f',
+                InputOption::VALUE_NONE,
+                'Execute command without confirmation.'
+            )
+        ;
     }
 
     /**
@@ -41,101 +93,77 @@ class PurgeCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $project = $input->getArgument('project');
-        $type = $input->getArgument('type');
+        $this->input = $input;
+        $this->output = $output;
+        $this->criteria = $this->buildCriteria();
+        $this->count = $this->manager->count($this->criteria);
+        $this->writeSearchCriteria();
+        $this->writeCount();
+        if ($this->count && $this->confirm()) {
+            $this->doExecute();
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    private function confirm()
+    {
+        return $this->input->getOption('force') || $this->askConfirm();
+    }
+
+    private function askConfirm()
+    {
+        $this->output->writeln(
+            '<comment>This command will remove %u sku from database, no rollback possible.</comment>'
+        );
+        $dialog = $this->getHelper('dialog');
+
+        return $dialog->askConfirmation(
+            $this->output,
+            "<question>Do you confirm? (y/n)</question>\n",
+            false
+        );
+    }
+
+    private function doExecute()
+    {
+        $this->manager->deleteWhere($this->criteria);
+    }
+
+    /**
+     * @return array
+     */
+    private function buildCriteria()
+    {
+        $criteria = array();
+        if ($this->input->hasArgument('project')) {
+            $criteria['project'] = $this->input->getArgument('project');
+        }
+        if ($this->input->hasArgument('type')) {
+            $criteria['type'] = $this->input->getArgument('type');
+        }
+
+        return $criteria;
+    }
+
+    private function writeSearchCriteria()
+    {
         $searching = "Searching for ";
-        $searching .= null === $type
-            ? "project=\"$project\""
-            : "project=\"$project\" and type=\"$type\"";
-        $output->writeln($searching);
-        $count = $this->countMatchingRows($project, $type);
-        if ($count) {
-            $found = $count > 1
-                ? "$count results found."
-                : "1 result found.";
-            $output->writeln($found);
-            $dialog = $this->getHelper('dialog');
-            if (!$dialog->askConfirmation(
-                $output,
-                '<question>This will delete IRREMEDIABLY this sku, CONTINUE ?</question>',
-                false
-            )
-            ) {
-                $output->writeln("Action canceled.");
-            } else {
-                $this->execDeleteQuery($project, $type);
-                $output->writeln("$count sku removed.");
-            }
-        } else {
-            $output->writeln("No matching records.");
+        if ($this->input->hasArgument('project')) {
+            $searching .= 'project=' . $this->input->getArgument('project');
         }
-        $output->writeln("Exit.");
-    }
-
-    /**
-     * @param string $project
-     * @param string $type
-     *
-     * @return mixed
-     */
-    private function countMatchingRows($project, $type)
-    {
-        $qb = $this->getSkuQueryBuilder();
-        $qb
-            ->select('count(s)')
-            ->where('s.project = :project')
-            ->setParameter(':project', $project);
-        if (!is_null($type)) {
-            $qb
-                ->andWhere('s.foreignType = :type')
-                ->setParameter(':type', $type);
+        if ($this->input->hasArgument('type')) {
+            $searching .= 'and type=' . $this->input->getArgument('type');
         }
-
-        return $qb
-            ->getQuery()
-            ->getSingleScalarResult();
+        $this->output->writeln($searching);
     }
 
     /**
-     * @return \Doctrine\ORM\QueryBuilder
+     * Write how many matching records found
      */
-    private function getSkuQueryBuilder()
+    private function writeCount()
     {
-        $repository = $this
-            ->getEntityManager()
-            ->getRepository('MeupApiBundle:Sku');
-
-        return $repository->createQueryBuilder('s');
-    }
-
-    /**
-     * @return \Doctrine\ORM\EntityManager
-     */
-    private function getEntityManager()
-    {
-        return $this
-            ->getContainer()
-            ->get('doctrine.orm.default_entity_manager');
-    }
-
-    /**
-     * @param string $project
-     * @param string $type
-     */
-    private function execDeleteQuery($project, $type)
-    {
-        $qb = $this->getSkuQueryBuilder();
-        $qb
-            ->delete()
-            ->where('s.project = :project')
-            ->setParameter(':project', $project);
-        if (!is_null($type)) {
-            $qb
-                ->andWhere('s.foreignType = :type')
-                ->setParameter(':type', $type);
-        }
-        $qb
-            ->getQuery()
-            ->execute();
+        $this->output->writeln($this->count . ' sku found in database.');
     }
 }

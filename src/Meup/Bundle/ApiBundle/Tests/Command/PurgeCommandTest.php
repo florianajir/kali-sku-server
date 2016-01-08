@@ -24,15 +24,14 @@ class PurgeCommandTest extends KernelTestCase
 {
     public function testExecute()
     {
-        $kernel = $this->createKernel();
-        $kernel->boot();
-
-        $application = new Application($kernel);
-        $application->add(new PurgeCommand());
-
-        $command = $application->find('meup:kali:purge');
-//        $commandTester =
-            new CommandTester($command);
+//        $kernel = $this->createKernel();
+//        $kernel->boot();
+//
+//        $application = new Application($kernel);
+//        $application->add(new PurgeCommand());
+//
+//        $command = $application->find('meup:kali:purge');
+//            new CommandTester($command);
         //TODO solve need a database connexion
 //        $commandTester->execute(array(
 //            'command' => $command->getName(),

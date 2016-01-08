@@ -10,36 +10,35 @@
 
 namespace Meup\Bundle\ApiBundle\Tests\Service;
 
-use Meup\Bundle\ApiBundle\Service\SkuCodeGenerator;
+use Meup\Bundle\ApiBundle\Service\CodeGenerator;
 
 /**
- * Class SkuCodeGeneratorTest
+ * Class CodeGeneratorTest
  *
+ * @author Florian Ajir <florian@1001pharmacies.com>
  * @author Loïc AMBROSINI <loic@1001pharmacies.com>
  */
-class SkuCodeGeneratorTest extends \PHPUnit_Framework_TestCase
+class CodeGeneratorTest extends \PHPUnit_Framework_TestCase
 {
     public function testGenerateSkuCode()
     {
-        $generator = new SkuCodeGenerator('7', 'abcdefghijklmnopqrstuvwxyz01234565789');
+        $generator = new CodeGenerator('7', 'abcdefghijklmnopqrstuvwxyz01234565789');
         $sku = $generator->generateSkuCode();
 
         $this->assertNotNull($sku);
     }
 
-    public function testSetCodeLenght()
+    public function testCodeLength()
     {
-        $generator = new SkuCodeGenerator('7', 'abcdefghijklmnopqrstuvwxyz01234565789');
-        $generator->setCodeLength('6');
+        $generator = new CodeGenerator('3', '123');
         $sku = $generator->generateSkuCode();
 
-        $this->assertEquals('6', strlen($sku));
+        $this->assertEquals('3', strlen($sku));
     }
 
-    public function testSetAlphabet()
+    public function testAlphabet()
     {
-        $generator = new SkuCodeGenerator('7', 'abcdefghijklmnopqrstuvwxyz01234565789');
-        $generator->setAlphabet('a');
+        $generator = new CodeGenerator('7', 'a');
         $sku = $generator->generateSkuCode();
 
         $this->assertEquals('aaaaaaa', $sku);
