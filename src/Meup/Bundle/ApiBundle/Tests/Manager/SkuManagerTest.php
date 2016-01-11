@@ -203,7 +203,23 @@ class SkuManagerTest extends DoctrineTestCase
      */
     public function testGetUniqueCode()
     {
-        //TODO
+        $code = uniqid();
+        $codeGenerator = $this->getCodeGeneratorMock();
+        $codeGenerator
+            ->expects($this->once())
+            ->method('generateSkuCode')
+            ->will($this->returnValue($code));
+        $repository = $this->getSkuRepositoryMock();
+        $repository
+            ->expects($this->once())
+            ->method('findOneByCode')
+            ->willReturn(null);
+        ;
+        $factory = $this->getSkuFactoryMock();
+        $manager = new SkuManager($repository, $factory, $codeGenerator);
+        $result = $manager->generateUniqueCode();
+        $this->assertNotNull($result);
+        $this->assertEquals($code, $result);
     }
 
     /**
@@ -211,7 +227,22 @@ class SkuManagerTest extends DoctrineTestCase
      */
     public function testFailedGetUniqueCode()
     {
-        //TODO
+        $codeGenerator = $this->getCodeGeneratorMock();
+        $codeGenerator
+            ->expects($this->any())
+            ->method('generateSkuCode')
+            ->will($this->returnValue(uniqid()))
+        ;
+        $repository = $this->getSkuRepositoryMock();
+        $repository
+            ->expects($this->exactly(SkuManager::MAX_GENERATION_ATTEMPTS))
+            ->method('findOneByCode')
+            ->will($this->returnValue(uniqid()));
+        ;
+        $factory = $this->getSkuFactoryMock();
+        $manager = new SkuManager($repository, $factory, $codeGenerator);
+        $this->setExpectedException('DomainException');
+        $manager->generateUniqueCode();
     }
 
     /**

@@ -11,8 +11,8 @@
 namespace Meup\Bundle\ApiBundle\Tests\Command;
 
 use Meup\Bundle\ApiBundle\Command\PurgeCommand;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -20,23 +20,90 @@ use Symfony\Component\Console\Tester\CommandTester;
  *
  * @author Florian AJIR <florian@1001pharmacies.com>
  */
-class PurgeCommandTest extends KernelTestCase
+class PurgeCommandTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testExecute()
     {
-//        $kernel = $this->createKernel();
-//        $kernel->boot();
-//
-//        $application = new Application($kernel);
-//        $application->add(new PurgeCommand());
-//
-//        $command = $application->find('meup:kali:purge');
-//            new CommandTester($command);
-        //TODO solve need a database connexion
-//        $commandTester->execute(array(
-//            'command' => $command->getName(),
-//            'project' => 'kali',
-//            'type' => 'sku',
-//        ));
+        $application = new Application();
+        $manager = $this->getSkuManagerMock();
+        $manager
+            ->expects($this->once())
+            ->method('deleteWhere')
+        ;
+        $manager
+            ->expects($this->once())
+            ->method('count')
+            ->willReturn(1)
+        ;
+        $application->add(new PurgeCommand($manager));
+        $command = $application->find('meup:kali:purge');
+        $commandTester = new CommandTester($command);
+        $project = uniqid();
+
+        $commandTester->execute(array(
+            'command' => $command->getName(),
+            'project' => $project,
+            '--force' => true
+        ));
+        $this->assertRegExp('/1 sku found/', $commandTester->getDisplay());
+    }
+
+
+    public function testExecuteWithDialog()
+    {
+        $application = new Application();
+        $manager = $this->getSkuManagerMock();
+        $manager
+            ->expects($this->once())
+            ->method('deleteWhere')
+        ;
+        $manager
+            ->expects($this->once())
+            ->method('count')
+            ->willReturn(1)
+        ;
+        $application->add(new PurgeCommand($manager));
+        $command = $application->find('meup:kali:purge');
+        $dialog = $this->getDialogHelperMock();
+        $dialog->expects($this->at(0))
+            ->method('askConfirmation')
+            ->will($this->returnValue(true)); // The user confirms
+
+        // We override the standard helper with our mock
+        $command->getHelperSet()->set($dialog, 'dialog');
+        $commandTester = new CommandTester($command);
+        $project = uniqid();
+
+        $commandTester->execute(array(
+            'command' => $command->getName(),
+            'project' => $project
+        ));
+        $this->assertRegExp('/1 sku found/', $commandTester->getDisplay());
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|SkuManagerInterface
+     */
+    private function getSkuManagerMock()
+    {
+        $manager = $this
+            ->getMockBuilder('Meup\Bundle\ApiBundle\Manager\SkuManagerInterface')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        return $manager;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Console\Helper\DialogHelper
+     */
+    private function getDialogHelperMock()
+    {
+        return $this->getMock(
+            'Symfony\Component\Console\Helper\DialogHelper',
+            array('askConfirmation')
+        );
     }
 }

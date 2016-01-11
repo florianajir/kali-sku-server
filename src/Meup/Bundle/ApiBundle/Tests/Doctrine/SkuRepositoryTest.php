@@ -37,7 +37,7 @@ class SkuRepositoryTest extends FixtureAwareTestCase
             ->get('doctrine')
             ->getManager();
 
-        // Base fixture for all tests
+        // Base fixture for tests
         $this->addFixture(new LoadSkuData());
         $this->executeFixtures();
     }
@@ -117,6 +117,31 @@ class SkuRepositoryTest extends FixtureAwareTestCase
         ));
         $this->assertEquals(1, $result);
     }
+
+    /**
+     * Test the repository deleteWhere function
+     */
+    public function testDeleteWhere()
+    {
+        $project = uniqid();
+        $sku1 = new Sku(uniqid(), $project);
+        $this->getRepository()->save($sku1);
+        $sku2 = new Sku(uniqid(), $project);
+        $this->getRepository()->save($sku2);
+        $count1 = $this->getRepository()->countMatching(array(
+            'project' => $project
+        ));
+        $this->assertEquals(2, $count1);
+        $result = $this->getRepository()->deleteWhere(array(
+            'project' => $project
+        ));
+        $this->assertEquals(2, $result);
+        $count2 = $this->getRepository()->countMatching(array(
+            'project' => $project
+        ));
+        $this->assertEquals(0, $count2);
+    }
+
 
     /**
      * @return \Doctrine\ORM\EntityRepository|SkuRepository
