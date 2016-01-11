@@ -9,7 +9,7 @@
  */
 namespace Meup\Bundle\ApiBundle\Command;
 
-use Meup\Bundle\ApiBundle\Manager\SkuManager;
+use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -37,7 +37,7 @@ class PurgeCommand extends Command
     private $output;
 
     /**
-     * @var SkuManager
+     * @var SkuManagerInterface
      */
     private $manager;
 
@@ -52,9 +52,9 @@ class PurgeCommand extends Command
     private $criteria;
 
     /**
-     * @param SkuManager $manager
+     * @param SkuManagerInterface $manager
      */
-    public function __construct(SkuManager $manager)
+    public function __construct(SkuManagerInterface $manager)
     {
         $this->manager = $manager;
 

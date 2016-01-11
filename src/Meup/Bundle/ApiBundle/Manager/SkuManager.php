@@ -159,10 +159,11 @@ class SkuManager implements SkuManagerInterface
         $attempt = 0;
         $code = null;
         while ($code === null || $this->exists($code)) {
-            if ($attempt++ > self::MAX_GENERATION_ATTEMPTS) {
+            if ($attempt >= self::MAX_GENERATION_ATTEMPTS) {
                 throw new \DomainException('Failed to get unique code: exceeding the maximum number of attempts!');
             }
             $code = $this->codeGenerator->generateSkuCode();
+            $attempt++;
         }
 
         return $code;

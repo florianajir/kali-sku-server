@@ -14,14 +14,9 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
-
-use Meup\Bundle\ApiBundle\Factory\SkuFactory;
 use Meup\Bundle\ApiBundle\Form\Type\SkuType;
 use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;
-use Meup\Bundle\ApiBundle\Service\SkuAllocatorInterface;
-
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
+use Nelmio\ApiDocBundle\Annotation\ApiDoc; // Do not delete this line (annotations)
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -36,14 +31,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class SkuController extends FOSRestController
 {
-    /**
-     * @return SkuFactory
-     */
-    private function getSkuFactory()
-    {
-        return $this->get('meup_kali.sku_factory');
-    }
-
     /**
      * @return SkuManagerInterface
      */
