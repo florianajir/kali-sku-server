@@ -78,7 +78,6 @@ abstract class Sku implements SkuInterface
         return $this;
     }
 
-
     /**
      * {@inheritDoc}
      */
