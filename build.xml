@@ -33,6 +33,7 @@
             depends="ci:cleanup,ci:composer"
             description="Run tests for continous integration">
 
+        <phingcall target="ci:dbcreate" />
         <phingcall target="ci:lint" />
         <phingcall target="ci:phpunit" />
         <phingcall target="ci:phpcs" />
@@ -41,6 +42,7 @@
         <phingcall target="ci:pdepend" />
         <phingcall target="ci:phpmetrics" />
         <phingcall target="ci:phploc" />
+        <phingcall target="ci:dbdestroy" />
     </target>
 
     <target name="ci:cleanup"
@@ -51,6 +53,18 @@
         <mkdir dir="${builddir}" />
         <mkdir dir="${builddir}/reports" />
         <mkdir dir="${builddir}/reports/coverage" />
+    </target>
+
+    <target name="ci:dbcreate"
+            description="Create database schema">
+
+        <exec command="php app/console doctrine:database:create" logoutput="true"/>
+    </target>
+
+    <target name="ci:dbdestroy"
+            description="Destroy database schema">
+
+        <exec command="php app/console doctrine:database:drop --force" logoutput="true"/>
     </target>
 
     <target name="ci:composer"
