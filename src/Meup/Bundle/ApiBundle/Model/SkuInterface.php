@@ -32,6 +32,13 @@ interface SkuInterface
     public function getProject();
 
     /**
+     * Set project property
+     *
+     * @param string $project
+     */
+    public function setProject($project);
+
+    /**
      * Get foreignerType
      *
      * @return string

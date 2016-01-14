@@ -12,7 +12,7 @@ namespace Meup\Bundle\ApiBundle\Tests\Form\Type;
 
 use Meup\Bundle\ApiBundle\Entity\Sku;
 use Meup\Bundle\ApiBundle\Factory\SkuFactory;
-use Meup\Bundle\ApiBundle\Form\Type\SkuType;
+use Meup\Bundle\ApiBundle\Form\SkuType;
 use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
 

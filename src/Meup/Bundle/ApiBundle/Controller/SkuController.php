@@ -14,7 +14,6 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
-use Meup\Bundle\ApiBundle\Form\Type\SkuType;
 use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc; // Do not delete this line (annotations)
 use Symfony\Component\Form\FormInterface;
@@ -97,7 +96,7 @@ class SkuController extends FOSRestController
      *   section = "Sku",
      *   resource = true,
      *   resourceDescription="Create a new sku.",
-     *   input = "Meup\Bundle\ApiBundle\Form\Type\SkuType",
+     *   input = "Meup\Bundle\ApiBundle\Form\SkuType",
      *   statusCodes = {
      *     200 = "Returned when existing entity found",
      *     201 = "Returned when successful",
@@ -113,7 +112,7 @@ class SkuController extends FOSRestController
     public function postSkuAction(Request $request)
     {
         $manager = $this->getSkuManager();
-        $form = $this->createForm(SkuType::class);
+        $form = $this->createForm($this->container->get('meup_kali.sku_form_type'));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -127,7 +126,6 @@ class SkuController extends FOSRestController
                 return new View($existantSku);
             }
             $sku = $form->getData();
-            var_dump($sku);
             $manager->save($sku);
 
             return new View($sku, Codes::HTTP_CREATED);
@@ -145,7 +143,7 @@ class SkuController extends FOSRestController
      *   section = "Sku",
      *   resource = true,
      *   resourceDescription="Edit an sku.",
-     *   input = "Meup\Bundle\ApiBundle\Form\Type\SkuType",
+     *   input = "Meup\Bundle\ApiBundle\Form\SkuType",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     400 = "Returned when the form has errors",
@@ -169,7 +167,7 @@ class SkuController extends FOSRestController
         if (null === $sku = $manager->find($sku)) {
             throw $this->createNotFoundException("Sku does not exist.");
         }
-        $form = $this->createForm(SkuType::class, $sku, array('method' => 'PUT'));
+        $form = $this->createForm('sku', $sku, array('method' => 'PUT'));
         $form->handleRequest($request);
         if ($form->isValid()) {
             $existantSku = $manager->findByProjectTypeId(
@@ -301,9 +299,6 @@ class SkuController extends FOSRestController
      */
     public function allocateSkuAction($project)
     {
-        if (empty($project)) {
-            throw new BadRequestHttpException("Request parameters values does not match requirements.");
-        }
         $sku = $this->getSkuManager()->allocate($project);
 
         return new View($sku, Codes::HTTP_CREATED);

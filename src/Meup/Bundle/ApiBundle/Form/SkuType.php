@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Meup\Bundle\ApiBundle\Form\Type;
+namespace Meup\Bundle\ApiBundle\Form;
 
 use Meup\Bundle\ApiBundle\Factory\SkuFactory;
 use Meup\Bundle\ApiBundle\Manager\SkuManagerInterface;

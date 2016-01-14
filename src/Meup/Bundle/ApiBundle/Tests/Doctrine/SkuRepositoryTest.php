@@ -38,7 +38,9 @@ class SkuRepositoryTest extends FixtureAwareTestCase
             ->getManager();
 
         // Base fixture for tests
-        $this->addFixture(new LoadSkuData());
+        $fixture = new LoadSkuData();
+        $this->assertEquals(1, $fixture->getOrder());
+        $this->addFixture($fixture);
         $this->executeFixtures();
     }
 

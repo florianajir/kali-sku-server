@@ -5,7 +5,7 @@ services:
             - Meup\Bundle\ApiBundle\Entity\Sku
 
     meup_kali.sku_form_type:
-        class: Meup\Bundle\ApiBundle\Form\Type\SkuType
+        class: Meup\Bundle\ApiBundle\Form\SkuType
         arguments:
             - @meup_kali.sku_factory
             - @meup_kali.sku_manager

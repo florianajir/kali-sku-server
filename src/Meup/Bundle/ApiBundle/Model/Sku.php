@@ -71,6 +71,17 @@ abstract class Sku implements SkuInterface
     /**
      * {@inheritDoc}
      */
+    public function setProject($project)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
     public function getForeignType()
     {
         return $this->foreignType;
