@@ -187,8 +187,12 @@ class SkuControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals($code, $result['code']);
+        //new allocate for conflic test
+        $client = $this->allocate($project);
+        $this->assertEquals(Response::HTTP_CREATED, $client->getResponse()->getStatusCode());
+        $conflict = json_decode($client->getResponse()->getContent(), true);
         //edit existant
-        $client = $this->edit('1234567', $project, $type, $id);
+        $client = $this->edit($conflict['code'], $project, $type, $id);
         $this->assertEquals(Response::HTTP_CONFLICT, $client->getResponse()->getStatusCode());
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals($code, $result['code']);
