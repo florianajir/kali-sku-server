@@ -59,6 +59,7 @@
             description="Create database schema">
 
         <exec command="php app/console doctrine:database:create" logoutput="true"/>
+        <exec command="php app/console doctrine:schema:update --force" logoutput="true"/>
     </target>
 
     <target name="ci:dbdestroy"
